@@ -45,7 +45,7 @@ export default {
         value: 'Node'
       },
       {
-        text: 'Cose',
+        text: 'Cost',
         align: 'left',
         sortable: true,
         value: 'Cost'
