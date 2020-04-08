@@ -2,9 +2,30 @@
   <v-app>
     <v-content>
       {{deck}}
+      あああ
       <SearchArea/>
-      <CardList :cardstore="cardstore"/>
-
+      <v-row>
+        <v-col cols="5">
+          カードリスト
+          <CardList :cardstore="cardstore"/>
+        </v-col>
+        <v-col cols="1">
+          <v-row>
+           <v-btn icon color="black">
+             <v-icon>mdi-arrow-right</v-icon>
+           </v-btn>
+          </v-row>
+          <v-row>
+            <v-btn icon color="black">
+             <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+          </v-row>
+        </v-col>
+        <v-col cols="5">
+          デッキ
+          <CardList :cardstore="deckstore"/>
+        </v-col>
+      </v-row>
     </v-content>
   </v-app>
 </template>
@@ -37,6 +58,7 @@ export default {
   data: () => ({
     deck: null,
     cardstore: null,
+    deckstore: [],
     configstore: null,
   }),
 };

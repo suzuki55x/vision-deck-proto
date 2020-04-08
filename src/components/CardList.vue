@@ -8,7 +8,7 @@
         mb-5
         xs12
       >
-        <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" dense></v-data-table>
+        <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" dense @click="select_row"></v-data-table>
       </v-flex>
 
     </v-layout>
@@ -58,5 +58,11 @@ export default {
       },
     ]
   }),
+  methods: {
+    select_row : function() {
+
+    },
+    this.cardlist = Object.values(this.cardstore.get("Cards"))
+  },
 };
 </script>
