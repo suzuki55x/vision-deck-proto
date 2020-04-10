@@ -11,7 +11,7 @@
         </v-col>
         <v-col cols="1">
           <v-row>
-           <v-btn icon color="black">
+           <v-btn icon color="black" @click="addDeckList()">
              <v-icon>mdi-arrow-right</v-icon>
            </v-btn>
           </v-row>
@@ -61,5 +61,10 @@ export default {
     deckstore: [],
     configstore: null,
   }),
+  methods : {
+    addDeckList() {
+      alert('hoge');
+    },
+  },
 };
 </script>

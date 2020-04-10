@@ -8,9 +8,18 @@
         mb-5
         xs12
       >
-        <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" dense @click="select_row"></v-data-table>
+        <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
+          <template v-slot:item="{ item }">
+            <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
+              <td>{{item.No}}</td>
+              <td>{{item.Name}}</td>
+              <td>{{item.Node}}</td>
+              <td>{{item.Cost}}</td>
+              <td>{{item.Skill}}</td>
+            </tr>
+            </template>
+        </v-data-table>
       </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -25,6 +34,8 @@ export default {
   },
   data: () => ({
     cardlist: [],
+    selected: [],
+    selectedRows: [],
     headers: [
       {
         text: 'No',
@@ -59,10 +70,23 @@ export default {
     ]
   }),
   methods: {
-    select_row : function() {
-
+    rowClicked(row) {
+      this.swapSelectionStatus(row.No);
+      this.log(row);
     },
-    this.cardlist = Object.values(this.cardstore.get("Cards"))
+    swapSelectionStatus(keyID) {
+      if (this.selectedRows.includes(keyID)) {
+        this.selectedRows = this.selectedRows.filter(
+          selectedKeyID => selectedKeyID !== keyID
+        );
+      } else {
+        this.selectedRows.push(keyID);
+      }
+    },
+    log(logItem) {
+      /* eslint-disable no-console */
+      console.log(logItem);
+    },
   },
 };
 </script>
