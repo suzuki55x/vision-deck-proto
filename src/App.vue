@@ -7,7 +7,7 @@
       <v-row>
         <v-col cols="5">
           カードリスト
-          <CardList :cardstore="cardstore"/>
+          <CardList :cardstore="cardstore" ref="cardlist"/>
         </v-col>
         <v-col cols="1">
           <v-row>
@@ -23,7 +23,7 @@
         </v-col>
         <v-col cols="5">
           デッキ
-          <CardList :cardstore="deckstore"/>
+          <CardList :cardstore="deckstore" ref="decklist"/>
         </v-col>
       </v-row>
     </v-content>
@@ -63,7 +63,9 @@ export default {
   }),
   methods : {
     addDeckList() {
-      alert('hoge');
+      this.$refs.cardlist.getSelectedRaws().forEach(element => {
+        this.$refs.decklist.putData(element);
+      });
     },
   },
 };

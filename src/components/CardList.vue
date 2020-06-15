@@ -83,6 +83,12 @@ export default {
         this.selectedRows.push(keyID);
       }
     },
+    getSelectedRaws() {
+      return this.selectedRows;
+    },
+    putData(keyID) {
+      this.cardlist.push(keyID);
+    },
     log(logItem) {
       /* eslint-disable no-console */
       console.log(logItem);
