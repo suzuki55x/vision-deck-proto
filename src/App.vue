@@ -23,7 +23,7 @@
         </v-col>
         <v-col cols="5">
           デッキ
-          <CardList :cardstore="deckstore" ref="decklist"/>
+          <DeckList :cardstore="deckstore" ref="decklist"/>
         </v-col>
       </v-row>
     </v-content>
@@ -33,6 +33,7 @@
 <script>
 import SearchArea from './components/SearchArea';
 import CardList from './components/CardList';
+import DeckList from './components/DeckList';
 import Store from 'electron-store';
 import path from 'path';
 
@@ -40,7 +41,8 @@ export default {
   name: 'App',
   components: {
     SearchArea,
-    CardList
+    CardList,
+    DeckList
   },
   created: function() {
     this.cardstore = new Store({
@@ -64,7 +66,7 @@ export default {
   methods : {
     addDeckList() {
       this.$refs.cardlist.getSelectedRaws().forEach(element => {
-        this.$refs.decklist.putData(element);
+        this.$refs.decklist.putData(this.cardstore.get("Cards." + element));
       });
     },
   },

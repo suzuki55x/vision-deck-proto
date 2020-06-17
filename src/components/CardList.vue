@@ -30,6 +30,8 @@ export default {
     'cardstore'
   ],
   created: function() {
+    /* eslint-disable no-console */
+    //console.dir(this.cardstore.get("Cards"))
     this.cardlist = Object.values(this.cardstore.get("Cards"))
   },
   data: () => ({
@@ -85,9 +87,6 @@ export default {
     },
     getSelectedRaws() {
       return this.selectedRows;
-    },
-    putData(keyID) {
-      this.cardlist.push(keyID);
     },
     log(logItem) {
       /* eslint-disable no-console */
