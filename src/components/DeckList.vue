@@ -81,7 +81,6 @@ export default {
   methods: {
     rowClicked(row) {
       this.swapSelectionStatus(row.No);
-      this.log(row);
     },
     swapSelectionStatus(keyID) {
       if (this.selectedRows.includes(keyID)) {
@@ -95,17 +94,17 @@ export default {
     getSelectedRaws() {
       return this.selectedRows;
     },
-    putData(card) {
-      /* eslint-disable no-console */
-      console.dir(this.cardlist)
-      console.dir(card)
+    putCard(card) {
       if(this.cardlist.some(element => element.No === card.No)) {
-        this.cardlist.find(element => element.No === card.No).SheetNum++;
+        if(this.cardlist.find(element => element.No === card.No).SheetNum < 3) {
+          this.cardlist.find(element => element.No === card.No).SheetNum++;
+        }
       } else {
         card["SheetNum"] = 1;
         this.cardlist.push(card);
       }
     },
+
     log(logItem) {
       /* eslint-disable no-console */
       console.log(logItem);

@@ -3,7 +3,19 @@
     <v-content>
       {{deck}}
       あああ
-      <SearchArea/>
+      <SearchArea ref="searcharea"/>
+      <v-flex
+        mb-5
+        xs12>
+        <v-layout justify-center>
+          <v-btn large color="primary" @click="search()">
+            検索
+          </v-btn>
+          <v-btn large color="primary">
+            クリア
+          </v-btn>
+        </v-layout>
+      </v-flex>
       <v-row>
         <v-col cols="5">
           カードリスト
@@ -66,9 +78,12 @@ export default {
   methods : {
     addDeckList() {
       this.$refs.cardlist.getSelectedRaws().forEach(element => {
-        this.$refs.decklist.putData(this.cardstore.get("Cards." + element));
+        this.$refs.decklist.putCard(this.cardstore.get("Cards." + element));
       });
     },
+    search() {
+      this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
+    }
   },
 };
 </script>

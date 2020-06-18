@@ -14,7 +14,7 @@
           <v-layout justify-center>
             <v-card class="subheading mx-3">
               <v-text-field label="No" name="cardNo" outlined dense clearable hide-details></v-text-field>
-              <v-text-field label="文字列" name="cardTxt" outlined dense clearable hide-details></v-text-field>
+              <v-text-field label="文字列" v-model="cardTxt" outlined dense clearable hide-details></v-text-field>
               <v-select label="キャラクター" chips multiple outlined dense clearable hide-details></v-select>
               <v-select label="カードセット" chips multiple outlined dense clearable hide-details></v-select>
               <v-select label="種類" chips multiple outlined dense clearable hide-details></v-select>
@@ -36,31 +36,6 @@
         </v-form>
       </v-flex>
 
-      <v-flex
-        mb-5
-        xs12>
-        <v-layout justify-center>
-          <v-card>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>
-                  hoge
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-          <v-card>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>
-                  fuga
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-layout>
-      </v-flex>
-
     </v-layout>
   </v-container>
 </template>
@@ -68,20 +43,12 @@
 <script>
 export default {
   data: () => ({
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
+    cardTxt:''
   }),
+  methods: {
+    getSearchCondition() {
+      return this.cardTxt;
+    }
+  }
 };
 </script>
