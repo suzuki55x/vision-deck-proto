@@ -92,11 +92,8 @@ export default {
       console.log(logItem);
     },
     search(condition) {
-      if(!condition) {
-        this.cardlist = Object.values(this.cardstore.get("Cards"));
+        this.cardlist = condition.getSearchResult(Object.values(this.cardstore.get("Cards")));
         return;
-      }
-      this.cardlist = this.cardlist.filter(card => card.Name !== undefined && card.Name.indexOf(condition) > -1);
     }
   },
 };

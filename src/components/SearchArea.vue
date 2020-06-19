@@ -8,7 +8,6 @@
         mb-5
         xs12
       >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
 
         <v-form>
           <v-layout justify-center>
@@ -16,14 +15,19 @@
               <v-text-field label="No" name="cardNo" outlined dense clearable hide-details></v-text-field>
               <v-text-field label="文字列" v-model="cardTxt" outlined dense clearable hide-details></v-text-field>
               <v-select label="キャラクター" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select label="カードセット" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select label="種類" chips multiple outlined dense clearable hide-details></v-select>
+              <v-select :items="kind" label="種類" chips multiple outlined dense clearable hide-details></v-select>
             </v-card>
             <v-card class="subheading mx-3">
-              <v-select label="ノード" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select label="コスト" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select label="攻撃" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select label="耐久" chips multiple outlined dense clearable hide-details></v-select>
+              ノード：<input type="number" min="0" v-model="Node"><br>
+              コスト：<input type="number" min="0" v-model="Cost"><br>
+              攻撃：<input type="number" min="0" v-model="Attack"><br>
+              耐久：<input type="number" min="0" v-model="Defence"><br>
+            </v-card>
+            <v-card class="subheading mx-3">
+              <v-select :items="nodeOption" v-model="chosenNodeOption"></v-select>
+              <v-select :items="costOption" ></v-select>
+              <v-select :items="attackOption"></v-select>
+              <v-select :items="defenceOption"></v-select>
             </v-card>
             <v-card class="subheading mx-3">
               <v-select label="特殊効果" chips multiple outlined dense clearable hide-details></v-select>
@@ -41,13 +45,35 @@
 </template>
 
 <script>
+import SearchCondition from '../searchCondition';
+
 export default {
   data: () => ({
-    cardTxt:''
+    cardTxt:'',
+    Node:0,
+    Cost:0,
+    Attack:0,
+    Defence:0,
+    kind : ['キャラクター', 'スペル', 'コマンド'],
+    nodeOption : ['', '以上', '以下', 'に等しい'],
+    costOption : ['', '以上', '以下', 'に等しい'],
+    attackOption : ['', '以上', '以下', 'に等しい'],
+    defenceOption : ['', '以上', '以下', 'に等しい'],
+    chosenNodeOption:''
   }),
   methods: {
     getSearchCondition() {
-      return this.cardTxt;
+      let condition = new SearchCondition();
+      condition.cardTxt = this.cardTxt;
+      condition.node = this.Node;
+      condition.cost = this.Cost;
+      condition.attack = this.Attack;
+      condition.defence = this.Defence;
+      condition.nodeOption = this.chosenNodeOption;
+      condition.costOption = this.costOption;
+      condition.attackOption = this.attackOption;
+      condition.defenceOption = this.defenceOption;
+      return condition;
     }
   }
 };

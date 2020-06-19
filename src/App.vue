@@ -48,6 +48,7 @@ import CardList from './components/CardList';
 import DeckList from './components/DeckList';
 import Store from 'electron-store';
 import path from 'path';
+import SearchCondition from './searchCondition'; // eslint-disable-line no-unused-vars
 
 export default {
   name: 'App',
@@ -82,6 +83,7 @@ export default {
       });
     },
     search() {
+      this.$refs.searcharea.getSearchCondition();
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
     }
   },
