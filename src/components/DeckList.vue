@@ -8,7 +8,7 @@
         mb-5
         xs12
       >
-        <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
+        <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
           <template v-slot:item="{ item }">
             <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
               <td>{{item.SheetNum}}</td>
@@ -35,7 +35,6 @@ export default {
     // this.cardlist = Object.values(this.cardstore.get("Cards"))
   },
   data: () => ({
-    cardlist: [],
     decklist: [],
     selected: [],
     selectedRows: [],
@@ -95,16 +94,33 @@ export default {
       return this.selectedRows;
     },
     putCard(card) {
-      if(this.cardlist.some(element => element.No === card.No)) {
-        if(this.cardlist.find(element => element.No === card.No).SheetNum < 3) {
-          this.cardlist.find(element => element.No === card.No).SheetNum++;
+      if(this.decklist.some(element => element.No === card.No)) {
+        if(this.decklist.find(element => element.No === card.No).SheetNum < 3) {
+          this.decklist.find(element => element.No === card.No).SheetNum++;
         }
       } else {
         card["SheetNum"] = 1;
-        this.cardlist.push(card);
+        this.decklist.push(card);
       }
     },
-
+    loadDeck(deckArray) {
+      this.decklist = [];
+      /* eslint-disable no-console */
+      console.log(this.decklist);
+      let me = this;
+      deckArray.forEach(function(value) {
+        let line = value.split(',');
+        if(line.length != 3) {
+          /* eslint-disable no-console */
+          console.log("illegal deck data");
+          return;
+        }
+        let card = me.cardstore.get("Cards." + line[1]);
+        for(let num=0; num < line[0]; num++) {
+          me.putCard(card);
+        }
+      })
+    },
     log(logItem) {
       /* eslint-disable no-console */
       console.log(logItem);
