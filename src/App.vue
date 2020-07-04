@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-content>
+      {{ test }}
       <SearchArea ref="searcharea"/>
       <v-flex
         mb-5
@@ -50,8 +51,12 @@ import DeckList from './components/DeckList';
 import SidedeckList from './components/DeckList';
 import Deckio from './components/Deckio';
 import Store from 'electron-store';
-import path from 'path';
 import SearchCondition from './searchCondition.js'; // eslint-disable-line no-unused-vars
+
+//import path from 'path';
+
+import {remote} from 'electron';
+const {app} = remote;
 
 export default {
   name: 'App',
@@ -64,19 +69,23 @@ export default {
   },
   created: function() {
     this.cardstore = new Store({
-      cwd:  path.resolve(), 
+      //cwd:  path.resolve(), 
+      cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.deckstore = new Store({
-      cwd:  path.resolve(), 
+      //cwd:  path.resolve(), 
+      cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.sidedeckstore = new Store({
-      cwd:  path.resolve(), 
+      //cwd:  path.resolve(), 
+      cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.configstore = new Store({
-      cwd:  path.resolve(), 
+      //cwd:  path.resolve(), 
+      cwd:  app.getAppPath(), 
       name: "config"
     })
   },
@@ -84,6 +93,7 @@ export default {
     this.deck = this.configstore.get("Card.Deck", {"mu":"ri"})
   },
   data: () => ({
+    test: "",
     deck: null,
     cardstore: null,
     deckstore: [],
@@ -98,7 +108,12 @@ export default {
       });
     },
     search() {
+      this.test = app.getAppPath();
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
+      /* eslint-disable no-console */
+      //console.log(path.resolve())
+      /* eslint-disable no-console */
+      //console.log(app.getAppPath())
     },
     loadDeck(deckArray) {
       let sepalate = deckArray.indexOf('--');
