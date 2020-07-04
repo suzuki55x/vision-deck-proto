@@ -1,10 +1,10 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
+      nodeIntegration: true,
       builderOptions: {
         productName: "vision-deck-proto",
         appId: "com.vision.deck",
-        nodeIntegration: true,
         win: {
           icon: 'src/assets/app.ico',
           target: [
