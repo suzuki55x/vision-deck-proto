@@ -112,7 +112,7 @@ export default {
         let line = value.split(',');
         if(line.length != 3) {
           /* eslint-disable no-console */
-          console.log("illegal deck data");
+          console.log("illegal card data" + line);
           return;
         }
         let card = me.cardstore.get("Cards." + line[1]);

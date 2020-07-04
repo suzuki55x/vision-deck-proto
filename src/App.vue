@@ -94,9 +94,6 @@ export default {
   methods : {
     addDeckList() {
       this.$refs.cardlist.getSelectedRaws().forEach(element => {
-        /* eslint-disable no-console */
-        console.log(element);
-        console.dir(this.cardstore.get("Cards"));
         this.$refs.decklist.putCard(this.cardstore.get("Cards." + element));
       });
     },
@@ -106,9 +103,6 @@ export default {
     loadDeck(deckArray) {
       let sepalate = deckArray.indexOf('--');
       this.$refs.decklist.loadDeck(deckArray.slice(0,sepalate));
-      /* eslint-disable no-console */
-      // console.log(sepalate);
-      // console.log(deckArray.length);
       if(sepalate+2 < deckArray.length) {
         this.$refs.sidedecklist.loadDeck(deckArray.slice(sepalate+1, deckArray.length));
       }
