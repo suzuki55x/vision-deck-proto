@@ -53,10 +53,7 @@ import Deckio from './components/Deckio';
 import Store from 'electron-store';
 import SearchCondition from './searchCondition.js'; // eslint-disable-line no-unused-vars
 
-//import path from 'path';
-
-import {remote} from 'electron';
-const {app} = remote;
+import path from 'path';
 
 export default {
   name: 'App',
@@ -69,23 +66,23 @@ export default {
   },
   created: function() {
     this.cardstore = new Store({
-      //cwd:  path.resolve(), 
-      cwd:  app.getAppPath(), 
+      cwd:  path.resolve(), 
+      // cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.deckstore = new Store({
-      //cwd:  path.resolve(), 
-      cwd:  app.getAppPath(), 
+      cwd:  path.resolve(), 
+      // cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.sidedeckstore = new Store({
-      //cwd:  path.resolve(), 
-      cwd:  app.getAppPath(), 
+      cwd:  path.resolve(), 
+      // cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.configstore = new Store({
-      //cwd:  path.resolve(), 
-      cwd:  app.getAppPath(), 
+      cwd:  path.resolve(), 
+      // cwd:  app.getAppPath(), 
       name: "config"
     })
   },
@@ -108,10 +105,10 @@ export default {
       });
     },
     search() {
-      this.test = app.getAppPath();
+      // this.test = app.getAppPath();
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
       /* eslint-disable no-console */
-      //console.log(path.resolve())
+      console.log(path.resolve())
       /* eslint-disable no-console */
       //console.log(app.getAppPath())
     },
