@@ -30,9 +30,9 @@
               <v-select :items="toughnessOption" v-model="chosenToughnessOption"></v-select>
             </v-card>
             <v-card class="subheading mx-3">
-              <v-select :items="specialEffect" label="特殊効果" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select :items="tactics" label="戦術" chips multiple outlined dense clearable hide-details></v-select>
-              <v-select :items="attribute" label="種族" chips multiple outlined dense clearable hide-details></v-select>
+              <v-select :items="specialEffect" v-model="selectedSpecialEffect" label="特殊効果" chips multiple outlined dense clearable hide-details></v-select>
+              <v-select :items="tactics" v-model="selectedTactics" label="戦術" chips multiple outlined dense clearable hide-details></v-select>
+              <v-select :items="attribute" v-model="selectedAttribute" label="種族" chips multiple outlined dense clearable hide-details></v-select>
               <v-select label="範囲" chips multiple outlined dense clearable hide-details></v-select>
               <v-select label="期間" chips multiple outlined dense clearable hide-details></v-select>
             </v-card>
@@ -60,6 +60,9 @@ export default {
     chosenCostOption:'',
     chosenAttackOption:'',
     chosenToughnessOption:'',
+    selectedSpecialEffect: [],
+    selectedTactics: [],
+    selectedAttribute: [],
   }),
   created: function() {
     this.condition = new SearchCondition();
@@ -86,6 +89,9 @@ export default {
       this.condition.costOption = this.chosenCostOption;
       this.condition.attackOption = this.chosenAttackOption;
       this.condition.toughnessOption = this.chosenToughnessOption;
+      this.condition.selectedSpecialEffect = this.selectedSpecialEffect;
+      this.condition.selectedTactics = this.selectedTactics;
+      this.condition.selectedAttribute = this.selectedAttribute;
       return this.condition;
     }
   }

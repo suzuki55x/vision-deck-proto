@@ -1,11 +1,12 @@
 export default class SearchCondition { // eslint-disable-line no-unused-vars
+    DEF_CHARACTER = ['']
     DEF_SPECIAL_EFFECT = ['装備', '呪符', '装備／場', '幻想生物', '世界呪符', '一符', '二符', 'Union', '神器',
     'ターン1枚制限', '自分ターン制限', '相手ターン制限', 'デッキ1枚制限', '抵抗'];
     DEF_TACTICS = ['速攻', '奇襲', '先制', '貫通', '隠密', '耐性', '人形', '伝説', 'マナチャージ', '警戒', 
     '即死', '変身', '加護'];
     DEF_TYPE = ['', 'キャラクター', 'スペル', 'コマンド'];
     DEF_ATTRIBUTE = ['人間', '妖怪', '妖精', '魔法使い', '河童', '吸血鬼', '魔界人', '幽霊', '天狗', '死神', '閻魔', '神', '獣',
-    '鬼', '天人', '龍', '仙人'];
+    '鬼', '天人', '龍', '仙人','種族なし'];
     DEF_NODE_OPTION = ['', '以上', '以下', 'に等しい'];
     DEF_COST_OPTION = ['', '以上', '以下', 'に等しい'];
     DEF_ATTACK_OPTION = ['', '以上', '以下', 'に等しい'];
@@ -84,6 +85,39 @@ export default class SearchCondition { // eslint-disable-line no-unused-vars
                 cardlist = cardlist.filter(card => card.Toughness != '-' && card.Toughness == this.toughness);
             }
         }
+
+        //特殊効果の検索
+        if(this.selectedSpecialEffect.length > 0) {
+            cardlist = cardlist.filter(card =>
+                card.Skill !== undefined && 
+                this.selectedSpecialEffect.some(special =>
+                    card.Skill.indexOf(special) > -1
+                    )
+                )
+        }
+
+        //戦術の検索
+        if(this.selectedTactics.length > 0) {
+            cardlist = cardlist.filter(card =>
+                card.Skill !== undefined && 
+                this.selectedTactics.some(special =>
+                    card.Skill.indexOf(special) > -1
+                    )
+                )
+        }
+
+        //種族の検索
+        //ToDo: 種族なしの検索
+        if(this.selectedAttribute.length > 0) {
+            cardlist = cardlist.filter(card =>
+                card.Class !== undefined && 
+                this.selectedAttribute.some(special =>
+                    card.Class.indexOf(special) > -1
+                    )
+                )
+        }
+
+
         return cardlist;
     }
 }

@@ -67,22 +67,18 @@ export default {
   created: function() {
     this.cardstore = new Store({
       cwd:  path.resolve(), 
-      // cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.deckstore = new Store({
       cwd:  path.resolve(), 
-      // cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.sidedeckstore = new Store({
       cwd:  path.resolve(), 
-      // cwd:  app.getAppPath(), 
       name: "cardlist"
     })
     this.configstore = new Store({
       cwd:  path.resolve(), 
-      // cwd:  app.getAppPath(), 
       name: "config"
     })
   },
@@ -105,12 +101,7 @@ export default {
       });
     },
     search() {
-      // this.test = app.getAppPath();
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
-      /* eslint-disable no-console */
-      console.log(path.resolve())
-      /* eslint-disable no-console */
-      //console.log(app.getAppPath())
     },
     loadDeck(deckArray) {
       let sepalate = deckArray.indexOf('--');
