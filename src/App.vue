@@ -113,3 +113,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.center-input input {
+  text-align: center
+}
+.right-input input {
+  text-align: right
+}
+.left-input input {
+  text-align: left
+}
+</style>

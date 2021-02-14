@@ -18,16 +18,24 @@
               <v-select :items="type" label="種類" v-model="chosenType"></v-select>
             </v-card>
             <v-card class="subheading mx-3">
-              ノード：<input type="number" min="0" v-model="Node"><br>
-              コスト：<input type="number" min="0" v-model="Cost"><br>
-              攻撃：<input type="number" min="0" v-model="Attack"><br>
-              耐久：<input type="number" min="0" v-model="Toughness"><br>
-            </v-card>
-            <v-card class="subheading mx-3">
-              <v-select :items="nodeOption" v-model="chosenNodeOption"></v-select>
-              <v-select :items="costOption" v-model="chosenCostOption" ></v-select>
-              <v-select :items="attackOption" v-model="chosenAttackOption"></v-select>
-              <v-select :items="toughnessOption" v-model="chosenToughnessOption"></v-select>
+              <v-container>
+                <v-row>
+                  <v-col> <v-text-field type="number" class="right-input" min="0" label="Node" v-model="Node" clearable dense /> </v-col>
+                  <v-col> <v-select :items="nodeOption" v-model="chosenNodeOption" dense></v-select> </v-col>
+                </v-row>
+                <v-row>
+                  <v-col> <v-text-field type="number" class="right-input" min="0" label="Cost" v-model="Cost" clearable  dense/> </v-col>
+                  <v-col> <v-select :items="costOption" v-model="chosenCostOption"  dense></v-select> </v-col>
+                </v-row>
+                <v-row>
+                  <v-col> <v-text-field type="number" class="right-input" min="0" label="攻撃" v-model="Attack" clearable dense/> </v-col>
+                  <v-col> <v-select :items="attackOption" v-model="chosenAttackOption" dense></v-select> </v-col>
+                </v-row>
+                <v-row>
+                  <v-col> <v-text-field type="number" class="right-input" min="0" label="耐久" v-model="Toughness" clearable dense/> </v-col>
+                  <v-col> <v-select :items="toughnessOption" v-model="chosenToughnessOption" dense></v-select> </v-col>
+                </v-row>
+              </v-container>
             </v-card>
             <v-card class="subheading mx-3">
               <v-select :items="specialEffect" v-model="selectedSpecialEffect" label="特殊効果" chips multiple outlined dense clearable hide-details></v-select>
