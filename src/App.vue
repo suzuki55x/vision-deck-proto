@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-content>
-      {{ test }}
       <SearchArea ref="searcharea"/>
       <v-flex
         mb-5
@@ -86,7 +85,6 @@ export default {
     this.deck = this.configstore.get("Card.Deck", {"mu":"ri"})
   },
   data: () => ({
-    test: "",
     deck: null,
     cardstore: null,
     deckstore: [],
