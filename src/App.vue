@@ -16,10 +16,10 @@
         </v-layout>
       </v-flex>
       <v-row>
-        <v-col cols="5">
-          カードリスト
-          <CardList :cardstore="cardstore" ref="cardlist"/>
+        <v-col cols="6">
+          <CardList title='カードリスト' :cardstore="cardstore" ref="cardlist"/>
         </v-col>
+        <!--
         <v-col cols="1">
           <v-row>
            <v-btn icon color="black" @click="addDeckList()">
@@ -32,11 +32,10 @@
             </v-btn>
           </v-row>
         </v-col>
-        <v-col cols="5">
-          デッキ
-          <DeckList :cardstore="deckstore" ref="decklist"/>
-          サイド
-          <SidedeckList :cardstore="sidedeckstore" ref="sidedecklist"/>
+        -->
+        <v-col cols="6">
+          <DeckList title='デッキ' :cardstore="deckstore" ref="decklist"/>
+          <DeckList title='サイドデッキ' :cardstore="sidedeckstore" ref="sidedecklist"/>
         </v-col>
       </v-row>
     </v-content>
@@ -47,7 +46,7 @@
 import SearchArea from './components/SearchArea';
 import CardList from './components/CardList';
 import DeckList from './components/DeckList';
-import SidedeckList from './components/DeckList';
+//import SidedeckList from './components/DeckList';
 import Deckio from './components/Deckio';
 import Store from 'electron-store';
 import SearchCondition from './searchCondition.js'; // eslint-disable-line no-unused-vars
@@ -60,7 +59,7 @@ export default {
     SearchArea,
     CardList,
     DeckList,
-    SidedeckList,
+    //SidedeckList,
     Deckio
   },
   created: function() {

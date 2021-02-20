@@ -8,18 +8,21 @@
         mb-5
         xs12
       >
-        <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
-          <template v-slot:item="{ item }">
-            <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
-              <td>{{item.SheetNum}}</td>
-              <td>{{item.No}}</td>
-              <td>{{item.Name}}</td>
-              <td>{{item.Node}}</td>
-              <td>{{item.Cost}}</td>
-              <td>{{item.Skill}}</td>
-            </tr>
-            </template>
-        </v-data-table>
+        <v-card>
+          <v-card-title>{{title}}</v-card-title>
+          <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
+            <template v-slot:item="{ item }">
+              <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
+                <td>{{item.SheetNum}}</td>
+                <td>{{item.No}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.Node}}</td>
+                <td>{{item.Cost}}</td>
+                <td>{{item.Skill}}</td>
+              </tr>
+              </template>
+          </v-data-table>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -28,6 +31,7 @@
 <script>
 export default {
   props: [
+    'title',
     'cardstore'
   ],
   created: function() {
