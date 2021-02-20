@@ -13,6 +13,11 @@
           <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
             <template v-slot:item="{ item }">
               <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
+                <td>
+                  <v-icon small class="mr-2" @click="showCardDetail(item)" >mdi-information</v-icon>
+                  <v-icon small @click="putCard(item)" >mdi-plus</v-icon>
+                  <v-icon small @click="removeCard(item)" >mdi-minus</v-icon>
+                </td>
                 <td>{{item.SheetNum}}</td>
                 <td>{{item.No}}</td>
                 <td>{{item.Name}}</td>
@@ -44,10 +49,16 @@ export default {
     selectedRows: [],
     headers: [
       {
+        text: 'Actions',
+        align: 'center',
+        sortable: false,
+        value: 'Actions'
+      },
+      {
         text: '枚',
         align: 'left',
         sortable: true,
-        value: 'SheetNum'
+        value: 'sheetnum'
       },
       {
         text: 'No',
@@ -97,6 +108,9 @@ export default {
     getSelectedRaws() {
       return this.selectedRows;
     },
+    showCardDetail(card) {
+      alert(`This is ${card.Name}`)
+    },
     putCard(card) {
       if(this.decklist.some(element => element.No === card.No)) {
         let card_index = this.decklist.findIndex(element => element.No === card.No);
@@ -112,11 +126,15 @@ export default {
     },
     removeCard(card) {
       if(this.decklist.some(element => element.No === card.No)) {
-        if(this.decklist.find(element => element.No === card.No).SheetNum > 0) {
-          this.decklist.find(element => element.No === card.No).SheetNum--;
-          if(this.decklist.find(element => element.No === card.No).SheetNum <= 0) {
+        let card_index = this.decklist.findIndex(element => element.No === card.No);
+        let card_in_deck = this.decklist[card_index];
+        if(card_in_deck.SheetNum > 0) {
+          card_in_deck.SheetNum--;
+          if(card_in_deck.SheetNum <= 0) {
             // 枚数が0以下になったらリストから削除
             this.decklist = this.decklist.filter(c => c != card);
+          } else {
+            this.$set(this.decklist, card_index, card_in_deck);
           }
         }
       } else {
