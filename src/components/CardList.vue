@@ -13,6 +13,10 @@
           <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
             <template v-slot:item="{ item }">
               <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
+                <td>
+                  <v-icon small class="mr-2" @click="showCardDetail(item)" >mdi-information</v-icon>
+                  <v-icon small @click="addDeck(item)" >mdi-plus</v-icon>
+                </td>
                 <td>{{item.No}}</td>
                 <td>{{item.Name}}</td>
                 <td>{{item.Node}}</td>
@@ -43,6 +47,12 @@ export default {
     selected: [],
     selectedRows: [],
     headers: [
+      {
+        text: 'Actions',
+        align: 'center',
+        sortable: false,
+        value: 'Actions'
+      },
       {
         text: 'No',
         align: 'left',
@@ -78,6 +88,12 @@ export default {
   methods: {
     rowClicked(row) {
       this.swapSelectionStatus(row.No);
+    },
+    addDeck(card) {
+      console.dir(card)
+    },
+    showCardDetail(card) {
+      console.dir(card)
     },
     swapSelectionStatus(keyID) {
       if (this.selectedRows.includes(keyID)) {
