@@ -99,12 +99,29 @@ export default {
     },
     putCard(card) {
       if(this.decklist.some(element => element.No === card.No)) {
-        if(this.decklist.find(element => element.No === card.No).SheetNum < 3) {
-          this.decklist.find(element => element.No === card.No).SheetNum++;
+        let card_index = this.decklist.findIndex(element => element.No === card.No);
+        let card_in_deck = this.decklist[card_index];
+        if(card_in_deck.SheetNum < 3) {
+          card_in_deck.SheetNum++;
+          this.$set(this.decklist, card_index, card_in_deck);
         }
       } else {
         card["SheetNum"] = 1;
         this.decklist.push(card);
+      }
+    },
+    removeCard(card) {
+      if(this.decklist.some(element => element.No === card.No)) {
+        if(this.decklist.find(element => element.No === card.No).SheetNum > 0) {
+          this.decklist.find(element => element.No === card.No).SheetNum--;
+          if(this.decklist.find(element => element.No === card.No).SheetNum <= 0) {
+            // 枚数が0以下になったらリストから削除
+            this.decklist = this.decklist.filter(c => c != card);
+          }
+        }
+      } else {
+        // カードがリストにないのに削除されようとしても0枚のまま
+        card["SheetNum"] = 0;
       }
     },
     loadDeck(deckArray) {

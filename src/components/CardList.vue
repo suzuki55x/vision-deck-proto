@@ -10,7 +10,7 @@
       >
         <v-card>
           <v-card-title>{{title}}</v-card-title>
-          <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
+          <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" v-model="selectedRows">
             <template v-slot:item="{ item }">
               <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
                 <td>
@@ -90,7 +90,7 @@ export default {
       this.swapSelectionStatus(row.No);
     },
     addDeck(card) {
-      console.dir(card)
+      this.$emit("addDeckList", card)
     },
     showCardDetail(card) {
       console.dir(card)
