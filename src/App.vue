@@ -17,7 +17,7 @@
       </v-flex>
       <v-row>
         <v-col cols="6">
-          <CardList title='カードリスト' :cardstore="cardstore" ref="cardlist" @addDeckList="addDeckList"/>
+          <CardList title='カードリスト' :cardstore="cardstore" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
         </v-col>
         <!--
         <v-col cols="1">
@@ -94,6 +94,9 @@ export default {
   methods : {
     addDeckList(card) {
       this.$refs.decklist.putCard(card);
+    },
+    addSideDeckList(card) {
+      this.$refs.sidedecklist.putCard(card);
     },
     search() {
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());

@@ -16,6 +16,7 @@
                 <td>
                   <v-icon small class="mr-2" @click="showCardDetail(item)" >mdi-information</v-icon>
                   <v-icon small @click="addDeck(item)" >mdi-plus</v-icon>
+                  <v-icon small @click="addSideDeck(item)" >mdi-plus-box</v-icon>
                 </td>
                 <td>{{item.No}}</td>
                 <td>{{item.Name}}</td>
@@ -91,6 +92,9 @@ export default {
     },
     addDeck(card) {
       this.$emit("addDeckList", card)
+    },
+    addSideDeck(card) {
+      this.$emit("addSideDeckList", card)
     },
     showCardDetail(card) {
       alert(`This is ${card.Name}`)
