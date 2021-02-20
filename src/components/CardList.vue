@@ -93,7 +93,7 @@ export default {
       this.$emit("addDeckList", card)
     },
     showCardDetail(card) {
-      console.dir(card)
+      alert(`This is ${card.Name}`)
     },
     swapSelectionStatus(keyID) {
       if (this.selectedRows.includes(keyID)) {
