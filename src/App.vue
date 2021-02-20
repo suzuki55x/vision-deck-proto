@@ -12,7 +12,7 @@
           <v-btn large color="primary">
             クリア
           </v-btn>
-          <Deckio ref="deckio" @load-deck="loadDeck"/>
+          <Deckio ref="deckio" @load-deck="loadDeck" @write-deck="writeDeck"/>
         </v-layout>
       </v-flex>
       <v-row>
@@ -89,7 +89,8 @@ export default {
     deckstore: [],
     sidedeckstore: [],
     configstore: null,
-    deckArray : []
+    writeDeckArray : [],
+    writeSideDeckArray : []
   }),
   methods : {
     addDeckList(card) {
@@ -107,6 +108,11 @@ export default {
       if(sepalate+2 < deckArray.length) {
         this.$refs.sidedecklist.loadDeck(deckArray.slice(sepalate+1, deckArray.length));
       }
+    },
+    writeDeck() {
+      const deck = this.$refs.decklist.decklist
+      const side = this.$refs.sidedecklist.decklist
+      this.$refs.deckio.saveDeckFile(deck, side)
     }
   },
 };
