@@ -15,7 +15,7 @@
               <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
             </template>
             <template v-slot:item="{ item }">
-              <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
+              <tr>
                 <td>
                   <v-icon small @click="showCardDetail(item)" >mdi-information</v-icon>
                   <v-icon small @click="putCard(item)" >mdi-plus</v-icon>

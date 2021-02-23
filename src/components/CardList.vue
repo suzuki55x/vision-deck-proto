@@ -16,7 +16,7 @@
             </template>
 
             <template v-slot:item="{ item }">
-              <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
+              <tr>
                 <td>
                   <v-icon small @click.stop="showCardDetail(item)" >mdi-information</v-icon>
                   <v-icon small @click="addDeck(item)" >mdi-plus</v-icon>
