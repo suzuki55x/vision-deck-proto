@@ -173,7 +173,7 @@ export default {
           console.log("illegal card data" + line);
           return;
         }
-        let card = me.cardstore.get("Cards." + line[1]);
+        let card = me.cardstore.Cards[line[1]];
         for(let num=0; num < line[0]; num++) {
           me.putCard(card);
         }
