@@ -10,11 +10,14 @@
       >
         <v-card>
           <v-card-title>{{title}}</v-card-title>
-          <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows">
+          <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows" multi-sort>
+            <template v-slot:top>
+              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
+            </template>
             <template v-slot:item="{ item }">
               <tr :class="selectedRows.indexOf(item.No)>-1?'cyan':''" @click="rowClicked(item)">
                 <td>
-                  <v-icon small class="mr-2" @click="showCardDetail(item)" >mdi-information</v-icon>
+                  <v-icon small @click="showCardDetail(item)" >mdi-information</v-icon>
                   <v-icon small @click="putCard(item)" >mdi-plus</v-icon>
                   <v-icon small @click="removeCard(item)" >mdi-minus</v-icon>
                 </td>
@@ -23,7 +26,13 @@
                 <td>{{item.Name}}</td>
                 <td>{{item.Node}}</td>
                 <td>{{item.Cost}}</td>
-                <td>{{item.Skill}}</td>
+                <td>
+                  <template v-if="item.Skill">
+                    <span v-for="skill in item.Skill.split(' ')" :key="skill">
+                      <v-chip class="mr-2" color="primary" pill outlined x-small>{{skill}}</v-chip>
+                    </span>
+                  </template>
+                </td>
               </tr>
               </template>
           </v-data-table>
@@ -34,7 +43,12 @@
 </template>
 
 <script>
+import CardDetailDialog from '@/components/CardDetailDialog';
+
 export default {
+  components: {
+    CardDetailDialog
+  },
   props: [
     'title',
     'cardstore'
@@ -43,14 +57,16 @@ export default {
     // this.cardlist = Object.values(this.cardstore.get("Cards"))
   },
   data: () => ({
+    detail_dialog: false,
     decklist: [],
-    selected: [],
+    selectedCard: {},
     selectedRows: [],
     headers: [
       {
         text: 'Actions',
         align: 'center',
         sortable: false,
+        width: 80,
         value: 'Actions'
       },
       {
@@ -108,7 +124,11 @@ export default {
       return this.selectedRows;
     },
     showCardDetail(card) {
-      alert(`This is ${card.Name}`)
+      this.selectedCard = card;
+      this.detail_dialog = true;
+    },
+    closeCardDetail() {
+      this.detail_dialog = false;
     },
     putCard(card) {
       if(this.decklist.some(element => element.No === card.No)) {
