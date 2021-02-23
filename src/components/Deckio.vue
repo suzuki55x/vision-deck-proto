@@ -38,19 +38,24 @@ export default {
             this.$emit('write-deck')
         },
         createSaveData: function(arr) {
-            if(Array.isArray(arr) && arr.length > 0) {
-                return arr.map(card => `${card.SheetNum},${card.No},${card.Name}`).join("\r\n")
-            }else{
+            if(!Array.isArray(arr)) {
+                // ここには来ないはず。
                 alert('デッキ保存エラー')
                 return false;
+            }
+            if(arr.length < 0) {
+                // デッキにカードが空
+                return false;
+            }else{
+                return arr.map(card => `${card.SheetNum},${card.No},${card.Name}`).join("\r\n")
             }
         },
         saveDeckFile: function(deck, side) {
             deck = this.createSaveData(deck)
-            if (!deck) return
+            if (!deck) deck = "";
 
             side = this.createSaveData(side)
-            if (!side) return
+            if (!side) side = "";
 
             const win = BrowserWindow.getFocusedWindow();
             dialog.showSaveDialog(
