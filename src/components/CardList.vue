@@ -12,7 +12,7 @@
           <v-card-title>{{title}}</v-card-title>
           <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" v-model="selectedRows" multi-sort sort-by="No">
             <template v-slot:top>
-              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable.sync="detail_dialog" :card="selectedCard" />
+              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
             </template>
 
             <template v-slot:item="{ item }">
