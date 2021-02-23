@@ -40,7 +40,6 @@ export default {
     'cardstore'
   ],
   created: function() {
-    /* eslint-disable no-console */
     // this.cardlist = Object.values(this.cardstore.get("Cards"))
   },
   data: () => ({
