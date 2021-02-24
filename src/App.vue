@@ -48,13 +48,15 @@ import CardList from './components/CardList';
 import DeckList from './components/DeckList';
 //import SidedeckList from './components/DeckList';
 import Deckio from './components/Deckio';
-import Store from 'electron-store';
+//import Store from 'electron-store';
 import SearchCondition from './searchCondition.js'; // eslint-disable-line no-unused-vars
-
-import path from 'path';
+import JsonMixin from '@/mixins/JsonMixin';
 
 export default {
   name: 'App',
+  mixins: [
+    JsonMixin
+  ],
   components: {
     SearchArea,
     CardList,
@@ -63,25 +65,13 @@ export default {
     Deckio
   },
   created: function() {
-    this.cardstore = new Store({
-      cwd:  path.resolve(), 
-      name: "cardlist"
-    })
-    this.deckstore = new Store({
-      cwd:  path.resolve(), 
-      name: "cardlist"
-    })
-    this.sidedeckstore = new Store({
-      cwd:  path.resolve(), 
-      name: "cardlist"
-    })
-    this.configstore = new Store({
-      cwd:  path.resolve(), 
-      name: "config"
-    })
+    this.cardstore = this.cardlist
+    this.deckstore = this.cardlist
+    this.sidedeckstore = this.cardlist
+    this.configstore = this.configlist
   },
   mounted: function() {
-    this.deck = this.configstore.get("Card.Deck", {"mu":"ri"})
+    this.deck = this.configstore.Card.Deck
   },
   data: () => ({
     deck: null,

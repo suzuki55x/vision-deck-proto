@@ -54,9 +54,9 @@ export default {
     'cardstore'
   ],
   created: function() {
+    this.cardlist = Object.values(this.cardstore.Cards)
     /* eslint-disable no-console */
-    //console.dir(this.cardstore.get("Cards"))
-    this.cardlist = Object.values(this.cardstore.get("Cards"))
+    console.dir(this.cardlist)
   },
   data: () => ({
     detail_dialog: false,
@@ -137,7 +137,7 @@ export default {
       console.log(logItem);
     },
     search(condition) {
-        this.cardlist = condition.getSearchResult(Object.values(this.cardstore.get("Cards")));
+        this.cardlist = condition.getSearchResult(Object.values(this.cardstore.Cards));
         return;
     }
   },
