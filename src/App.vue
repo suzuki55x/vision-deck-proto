@@ -1,10 +1,7 @@
 <template>
   <v-app>
     <v-content>
-      <SearchArea ref="searcharea"/>
-      <v-flex
-        mb-5
-        xs12>
+      <v-flex mb-5 xs12>
         <v-layout justify-center>
           <v-btn large color="primary" @click="search()">
             検索
@@ -17,6 +14,14 @@
       </v-flex>
       <v-row>
         <v-col cols="6">
+          <DeckList title='デッキ' :cardstore="deckstore" ref="decklist"/>
+        </v-col>
+        <v-col cols="6">
+          <DeckList title='サイドデッキ' :cardstore="sidedeckstore" ref="sidedecklist"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
           <CardList title='カードリスト' :cardstore="cardstore" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
         </v-col>
         <!--
@@ -33,9 +38,10 @@
           </v-row>
         </v-col>
         -->
-        <v-col cols="6">
-          <DeckList title='デッキ' :cardstore="deckstore" ref="decklist"/>
-          <DeckList title='サイドデッキ' :cardstore="sidedeckstore" ref="sidedecklist"/>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <SearchArea ref="searcharea"/>
         </v-col>
       </v-row>
     </v-content>
