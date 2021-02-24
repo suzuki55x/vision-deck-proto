@@ -15,7 +15,7 @@
               <span v-if="card.Type==='Character'">Glaze: {{card.Glaze||"0"}}</span>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <span v-if="card.Type==='Character'">種族: {{card.Class||"なし"}}</span>
+              <span v-if="card.Type==='Character'">種族: <img v-if="card.Class" :src="getIcon('class', card.Class)" :alt="card.Class"></span>
               <span v-else-if="card.Type==='Spell'">術者: {{card.User}}</span>
             </v-col>
           </v-row>
@@ -48,7 +48,12 @@
 </template>
 
 <script>
+import IconsMixin from '@/mixins/IconsMixin';
+
 export default {
+  mixins: [
+    IconsMixin
+  ],
   props: [
     'is_showable',
     'card'
@@ -56,6 +61,10 @@ export default {
   methods: {
     closeCardDetail: function() {
       this.$emit("closeDialog")
+    },
+    getIcon(type, idx) {
+      const filename = this.icons[type][idx]
+      return require(`@/assets/icons/${type}/${filename}`)
     }
   }
 }
