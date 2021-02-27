@@ -7,7 +7,7 @@
 
       <v-card-text>
         <v-container>
-          <v-row>
+          <v-row justify="center" align="center">
             <v-col cols="12" sm="6" md="4">
               <span>{{ card.Type }}</span>
             </v-col>
@@ -15,12 +15,11 @@
               <span v-if="card.Type==='Character'">Glaze: {{card.Glaze||"0"}}</span>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <div v-if="card.Type==='Character'" class='align-center'>
-                種族:
-                <img v-if="card.Class && classes[0]" :src="getIcon('class', classes[0])" :alt="classes[0]" />
-                <span v-else>なし</span>
-                <img v-if="card.Class && classes[1]" :src="getIcon('class', classes[1])" :alt="classes[1]" />
-              </div>
+              <p v-if="card.Type==='Character'" class="ma-0">
+                <img v-if="card.Class && classes[0]" :src="getIcon('class', classes[0])" :alt="classes[0]" class="classes-img mr-1" />
+                <span v-else>種族なし</span>
+                <img v-if="card.Class && classes[1]" :src="getIcon('class', classes[1])" :alt="classes[1]" class="classes-img" />
+              </p>
               <span v-else-if="card.Type==='Spell'">術者: {{card.User}}</span>
             </v-col>
           </v-row>
@@ -84,3 +83,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+img.classes-img {
+  height: 20px;
+  width: 20px;
+}
+</style>
