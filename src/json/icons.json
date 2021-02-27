@@ -1,0 +1,37 @@
+{
+  "class": {
+    "獣": "beast.gif",
+    "龍": "dragon.gif",
+    "閻魔": "enma.gif",
+    "妖精": "fairy.gif",
+    "幽霊": "ghost.gif",
+    "神": "god.gif",
+    "人間": "human.gif",
+    "河童": "kappa.gif",
+    "小人": "kobito.gif",
+    "魔界人": "makaijin.gif",
+    "鬼": "oni.gif",
+    "死神": "reaper.gif",
+    "仙人": "sennin.gif",
+    "天狗": "tengu.gif",
+    "天人": "tennin.gif",
+    "吸血鬼": "vampire.gif",
+    "魔法使い": "witch.gif",
+    "妖怪": "yokai.gif"
+  },
+  "range": {
+    "目標": "juzi.gif",
+    "対象": "guruguru.gif",
+    "星": "hoshi.gif",
+    "複数": "multi.gif",
+    "無し": "none.gif"
+  },
+  "time": {
+    "呪符": "curse.gif",
+    "世界呪符": "world_curse.gif",
+    "瞬間": "moment.gif",
+    "持続": "sustain.gif",
+    "装備": "equipment.gif",
+    "その他": "other.gif"
+  }
+}

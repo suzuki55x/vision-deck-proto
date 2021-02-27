@@ -4,18 +4,28 @@
       <v-card-title>
         <span class="headline">No.{{card.No||"0"}} {{ card.Name || ""}}</span>
       </v-card-title>
+      <v-card-subtitle>
+        <span>{{ card.Type }}</span>
+      </v-card-subtitle>
+
+      <v-divider class="mx-4" />
 
       <v-card-text>
         <v-container>
-          <v-row>
-            <v-col cols="12" sm="6" md="4">
-              <span>{{ card.Type }}</span>
+          <v-row justify="center" align="center">
+            <v-col cols="12" md="4">
+              <span v-if="card.Type==='Character' || ('Glaze' in card && card.Glaze!=='-')">Glaze: {{card.Glaze||"0"}}</span>
+              <span v-else>
+                <img v-if="'Range' in card && card.Range" :src="getIcon('range', card.Range)" :alt="card.Range" class="classes-img mr-1" />
+                <img v-if="'Time'  in card && card.Time" :src="getIcon('time', card.Time)" :alt="card.Time" class="classes-img" />
+              </span>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <span v-if="card.Type==='Character'">Glaze: {{card.Glaze||"0"}}</span>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <span v-if="card.Type==='Character'">種族: {{card.Class||"なし"}}</span>
+            <v-col cols="12" md="8">
+              <p v-if="card.Type==='Character'" class="ma-0">
+                <img v-if="card.Class && classes[0]" :src="getIcon('class', classes[0])" :alt="classes[0]" class="classes-img mr-1" />
+                <span v-else>種族なし</span>
+                <img v-if="card.Class && classes[1]" :src="getIcon('class', classes[1])" :alt="classes[1]" class="classes-img" />
+              </p>
               <span v-else-if="card.Type==='Spell'">術者: {{card.User}}</span>
             </v-col>
           </v-row>
@@ -48,7 +58,12 @@
 </template>
 
 <script>
+import IconsMixin from '@/mixins/IconsMixin';
+
 export default {
+  mixins: [
+    IconsMixin
+  ],
   props: [
     'is_showable',
     'card'
@@ -56,7 +71,32 @@ export default {
   methods: {
     closeCardDetail: function() {
       this.$emit("closeDialog")
+    },
+    getIcon(type, idx) {
+      const filename = this.icons[type][idx]
+      return require(`@/assets/icons/${type}/${filename}`)
+    },
+    debug() {
+      /* eslint-disable no-console */
+      console.dir(this);
     }
+  },
+  computed: {
+    // 種族リストを返す
+    classes: function() {
+      if ('Class' in this.card && this.card.Class !== "") {
+        return this.card.Class.split("／")
+      } else {
+        return ""
+      }
+    },
   }
 }
 </script>
+
+<style scoped>
+img.classes-img {
+  height: 20px;
+  width: 20px;
+}
+</style>
