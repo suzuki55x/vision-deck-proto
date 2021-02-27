@@ -10,32 +10,25 @@
       >
         <v-card>
           <v-card-title>{{title}}</v-card-title>
-          <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows" multi-sort>
-            <template v-slot:top>
-              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
+          <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
+          <v-virtual-scroll bench="1" :items="decklist" height="300" item-height="40">
+            <template v-slot:default="{ item }">
+              <v-list-item dense>
+                <v-list-item-avatar size="24">
+                  <v-avatar color="#2196F3" class="white--text">{{item.SheetNum}}</v-avatar>
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                  <v-list-item-title> No.{{item.No}}, {{item.Name}}</v-list-item-title>
+                </v-list-item-content>
+
+                <v-icon small @click="showCardDetail(item)" >mdi-information</v-icon>
+                <v-icon small @click="putCard(item)" >mdi-plus</v-icon>
+                <v-icon small @click="removeCard(item)" >mdi-minus</v-icon>
+              </v-list-item>
+              <v-divider inset></v-divider>
             </template>
-            <template v-slot:item="{ item }">
-              <tr>
-                <td>
-                  <v-icon small @click="showCardDetail(item)" >mdi-information</v-icon>
-                  <v-icon small @click="putCard(item)" >mdi-plus</v-icon>
-                  <v-icon small @click="removeCard(item)" >mdi-minus</v-icon>
-                </td>
-                <td>{{item.SheetNum}}</td>
-                <td>{{item.No}}</td>
-                <td>{{item.Name}}</td>
-                <td>{{item.Node}}</td>
-                <td>{{item.Cost}}</td>
-                <td>
-                  <template v-if="item.Skill">
-                    <span v-for="skill in item.Skill.split(' ')" :key="skill">
-                      <v-chip class="mr-2" color="primary" pill outlined x-small>{{skill}}</v-chip>
-                    </span>
-                  </template>
-                </td>
-              </tr>
-              </template>
-          </v-data-table>
+          </v-virtual-scroll>
         </v-card>
       </v-flex>
     </v-layout>
@@ -86,24 +79,6 @@ export default {
         align: 'left',
         sortable: true,
         value: 'Name'
-      },
-      {
-        text: 'Node',
-        align: 'left',
-        sortable: true,
-        value: 'Node'
-      },
-      {
-        text: 'Cost',
-        align: 'left',
-        sortable: true,
-        value: 'Cost'
-      },
-      {
-        text: 'Skill',
-        align: 'left',
-        sortable: true,
-        value: 'Skill'
       },
     ]
   }),
