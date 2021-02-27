@@ -15,7 +15,12 @@
               <span v-if="card.Type==='Character'">Glaze: {{card.Glaze||"0"}}</span>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <span v-if="card.Type==='Character'">種族: <img v-if="card.Class" :src="getIcon('class', card.Class)" :alt="card.Class"></span>
+              <div v-if="card.Type==='Character'" class='align-center'>
+                種族:
+                <img v-if="card.Class && classes[0]" :src="getIcon('class', classes[0])" :alt="classes[0]" />
+                <span v-else>なし</span>
+                <img v-if="card.Class && classes[1]" :src="getIcon('class', classes[1])" :alt="classes[1]" />
+              </div>
               <span v-else-if="card.Type==='Spell'">術者: {{card.User}}</span>
             </v-col>
           </v-row>
@@ -66,6 +71,16 @@ export default {
       const filename = this.icons[type][idx]
       return require(`@/assets/icons/${type}/${filename}`)
     }
+  },
+  computed: {
+    // 種族リストを返す
+    classes: function() {
+      if ('Class' in this.card && this.card.Class !== "") {
+        return this.card.Class.split("／")
+      } else {
+        return ""
+      }
+    },
   }
 }
 </script>
