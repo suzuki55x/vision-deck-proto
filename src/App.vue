@@ -24,20 +24,6 @@
         <v-col cols="12">
           <CardList title='カードリスト' :cardstore="cardstore" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
         </v-col>
-        <!--
-        <v-col cols="1">
-          <v-row>
-           <v-btn icon color="black" @click="addDeckList()">
-             <v-icon>mdi-arrow-right</v-icon>
-           </v-btn>
-          </v-row>
-          <v-row>
-            <v-btn icon color="black">
-             <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-          </v-row>
-        </v-col>
-        -->
       </v-row>
       <v-row>
         <v-col cols="12">
