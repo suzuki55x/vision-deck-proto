@@ -1,13 +1,4 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex
-        mb-5
-        xs12
-      >
         <v-card>
           <v-card-title>{{title}}</v-card-title>
           <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" v-model="selectedRows" multi-sort sort-by="No">
@@ -37,9 +28,6 @@
             </template>
           </v-data-table>
         </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
 </template>
 
 <script>
