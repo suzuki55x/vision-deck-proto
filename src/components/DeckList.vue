@@ -78,7 +78,6 @@ export default {
       return this.selectedRows;
     },
     showCardDetail(card) {
-      this.log(card)
       this.selectedCard = card;
       this.detail_dialog = true;
     },
