@@ -14,12 +14,12 @@
     <v-content id="main-content">
       <v-row>
         <v-col cols="6">
-          <DeckList title="デッキ" :cardstore="deckstore" ref="decklist" />
+          <DeckList title="デッキ" :cardstore="cardlist" ref="decklist" />
         </v-col>
         <v-col cols="6">
           <DeckList
             title="サイドデッキ"
-            :cardstore="sidedeckstore"
+            :cardstore="cardlist"
             ref="sidedecklist"
           />
         </v-col>
@@ -28,7 +28,7 @@
         <v-col cols="12">
           <CardList
             title="カードリスト"
-            :cardstore="cardstore"
+            :cardstore="cardlist"
             ref="cardlist"
             @addDeckList="addDeckList"
             @addSideDeckList="addSideDeckList"
@@ -65,20 +65,12 @@ export default {
     Deckio,
   },
   created: function () {
-    this.cardstore = this.cardlist;
-    this.deckstore = this.cardlist;
-    this.sidedeckstore = this.cardlist;
-    this.configstore = this.configlist;
   },
   mounted: function () {
-    this.deck = this.configstore.Card.Deck;
+    this.deck = this.configlist.Card.Deck;
   },
   data: () => ({
     deck: null,
-    cardstore: null,
-    deckstore: [],
-    sidedeckstore: [],
-    configstore: null,
     writeDeckArray: [],
     writeSideDeckArray: [],
   }),
