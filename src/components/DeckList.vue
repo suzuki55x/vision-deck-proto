@@ -1,46 +1,25 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex
-        mb-5
-        xs12
-      >
-        <v-card>
-          <v-card-title>{{title}}</v-card-title>
-          <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
-          <v-virtual-scroll bench="1" :items="decklist" height="300" item-height="40">
-            <template v-slot:default="{ item }">
-              <v-list-item dense>
-                <v-list-item-avatar size="24">
-                  <v-avatar color="#2196F3" class="white--text">{{item.SheetNum}}</v-avatar>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                  <v-list-item-title> No.{{item.No}}, {{item.Name}}</v-list-item-title>
-                </v-list-item-content>
-
-                <v-icon small @click="showCardDetail(item)" >mdi-information</v-icon>
-                <v-icon small @click="putCard(item)" >mdi-plus</v-icon>
-                <v-icon small @click="removeCard(item)" >mdi-minus</v-icon>
-              </v-list-item>
-              <v-divider inset></v-divider>
-            </template>
-          </v-virtual-scroll>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-card>
+    <v-card-title>{{title}}</v-card-title>
+    <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
+    <card-list-virtual-scroll :cardlist="decklist">
+      <template v-slot:action="{ card }">
+        <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon small @click="putCard(card)" >mdi-plus</v-icon>
+        <v-icon small @click="removeCard(card)" >mdi-minus</v-icon>
+      </template>
+    </card-list-virtual-scroll>
+  </v-card>
 </template>
 
 <script>
 import CardDetailDialog from '@/components/CardDetailDialog';
+import CardListVirtualScroll from '@/components/CardListVirtualScroll';
 
 export default {
   components: {
-    CardDetailDialog
+    CardDetailDialog,
+    CardListVirtualScroll
   },
   props: [
     'title',
@@ -99,6 +78,7 @@ export default {
       return this.selectedRows;
     },
     showCardDetail(card) {
+      this.log(card)
       this.selectedCard = card;
       this.detail_dialog = true;
     },
