@@ -1,7 +1,7 @@
 <template>
     <div>
         <input type="file" v-on:change="readDeck" accept="text/*,.json,.md">
-        <v-btn large color="primary" @click="writeDeck">デッキ出力</v-btn>
+        <v-btn icon color="primary" @click="writeDeck"><v-icon>mdi-file-export</v-icon></v-btn>
     </div>
 </template>
 
