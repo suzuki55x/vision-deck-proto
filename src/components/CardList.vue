@@ -1,41 +1,25 @@
 <template>
-        <v-card>
-          <v-card-title>{{title}}</v-card-title>
-          <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" v-model="selectedRows" multi-sort sort-by="No">
-            <template v-slot:top>
-              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
-            </template>
-
-            <template v-slot:item="{ item }">
-              <tr>
-                <td>
-                  <v-icon small @click.stop="showCardDetail(item)" >mdi-information</v-icon>
-                  <v-icon small @click="addDeck(item)" >mdi-plus</v-icon>
-                  <v-icon small @click="addSideDeck(item)" >mdi-plus-box</v-icon>
-                </td>
-                <td>{{item.No}}</td>
-                <td>{{item.Name}}</td>
-                <td>{{item.Node}}</td>
-                <td>{{item.Cost}}</td>
-                <td>
-                  <template v-if="item.Skill">
-                    <span v-for="skill in item.Skill.split(' ')" :key="skill">
-                      <v-chip class="mr-2" color="primary" pill outlined x-small>{{skill}}</v-chip>
-                    </span>
-                  </template>
-                </td>
-              </tr>
-            </template>
-          </v-data-table>
-        </v-card>
+  <v-card>
+    <v-card-title>{{title}}</v-card-title>
+    <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard"/>
+    <card-list-virtual-scroll :cardlist="cardlist">
+      <template v-slot:action="{ card }">
+        <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon small @click="addDeck(card)" >mdi-plus</v-icon>
+        <v-icon small @click="addSideDeck(card)" >mdi-plus-box</v-icon>
+      </template>
+    </card-list-virtual-scroll>
+  </v-card>
 </template>
 
 <script>
 import CardDetailDialog from '@/components/CardDetailDialog';
+import CardListVirtualScroll from '@/components/CardListVirtualScroll';
 
 export default {
   components: {
-    CardDetailDialog
+    CardDetailDialog,
+    CardListVirtualScroll
   },
   props: [
     'title',

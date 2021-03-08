@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>{{title}}</v-card-title>
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
-    <card-list-virtual-scroll :cardlist="decklist">
+    <card-list-virtual-scroll :cardlist="decklist" is_decklist>
       <template v-slot:action="{ card }">
         <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
         <v-icon small @click="putCard(card)" >mdi-plus</v-icon>
