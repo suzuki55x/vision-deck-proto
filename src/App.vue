@@ -3,12 +3,32 @@
     <div>
       <v-app-bar app dense>
         <v-spacer></v-spacer>
-            <Deckio
-              ref="deckio"
-              @load-deck="loadDeck"
-              @write-deck="writeDeck"
-            />
-            <v-btn icon color="primary" @click="search()"><v-icon>mdi-magnify</v-icon></v-btn>
+        <Deckio
+          ref="deckio"
+          @load-deck="loadDeck"
+          @write-deck="writeDeck"
+        />
+        <v-dialog
+          v-model="dialog"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon color="primary" v-bind="attrs" v-on="on" ><v-icon>mdi-magnify</v-icon></v-btn>
+          </template>
+          <v-card>
+            <v-toolbar dark>
+              <v-btn icon dark @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
+              <v-toolbar-title>カード検索</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn dark text @click="search(); dialog = false">検索</v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <SearchArea ref="searcharea" />
+          </v-card>
+        </v-dialog>
       </v-app-bar>
     </div>
     <v-content id="main-content">
@@ -33,11 +53,6 @@
             @addDeckList="addDeckList"
             @addSideDeckList="addSideDeckList"
           />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <SearchArea ref="searcharea" />
         </v-col>
       </v-row>
     </v-content>
@@ -70,6 +85,7 @@ export default {
     this.deck = this.configlist.Card.Deck;
   },
   data: () => ({
+    dialog: false,
     deck: null,
     writeDeckArray: [],
     writeSideDeckArray: [],
