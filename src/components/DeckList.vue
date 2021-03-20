@@ -134,13 +134,16 @@ export default {
       if(this.decklist.some(element => element.No === card.No)) {
         let card_index = this.decklist.findIndex(element => element.No === card.No);
         let card_in_deck = this.decklist[card_index];
+
         if(card_in_deck.SheetNum < 3) {
           card_in_deck.SheetNum++;
           this.$set(this.decklist, card_index, card_in_deck);
         }
       } else {
-        card["SheetNum"] = 1;
-        this.decklist.push(card);
+        // 渡されたのはcardへの参照なので、Object自体をディープコピー
+        let card_in_deck = Object.assign({}, card);
+        card_in_deck["SheetNum"] = 1;
+        this.decklist.push(card_in_deck);
       }
     },
     removeCard(card) {
