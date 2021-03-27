@@ -35,45 +35,6 @@ export default {
     cardlist: [],
     selectedCard: {},
     selectedRows: [],
-    headers: [
-      {
-        text: 'Actions',
-        align: 'center',
-        sortable: false,
-        width: 80,
-        value: 'Actions'
-      },
-      {
-        text: 'No',
-        align: 'left',
-        sortable: true,
-        value: 'No'
-      },
-      {
-        text: 'カード名',
-        align: 'left',
-        sortable: true,
-        value: 'Name'
-      },
-      {
-        text: 'Node',
-        align: 'left',
-        sortable: true,
-        value: 'Node'
-      },
-      {
-        text: 'Cost',
-        align: 'left',
-        sortable: true,
-        value: 'Cost'
-      },
-      {
-        text: 'Skill',
-        align: 'left',
-        sortable: true,
-        value: 'Skill'
-      },
-    ]
   }),
   methods: {
     rowClicked(row) {

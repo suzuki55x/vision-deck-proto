@@ -33,33 +33,6 @@ export default {
     decklist: [],
     selectedCard: {},
     selectedRows: [],
-    headers: [
-      {
-        text: 'Actions',
-        align: 'center',
-        sortable: false,
-        width: 80,
-        value: 'Actions'
-      },
-      {
-        text: '枚',
-        align: 'left',
-        sortable: true,
-        value: 'sheetnum'
-      },
-      {
-        text: 'No',
-        align: 'left',
-        sortable: true,
-        value: 'No'
-      },
-      {
-        text: 'カード名',
-        align: 'left',
-        sortable: true,
-        value: 'Name'
-      },
-    ]
   }),
   methods: {
     rowClicked(row) {
