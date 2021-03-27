@@ -26,9 +26,7 @@ export default {
     'cardstore'
   ],
   created: function() {
-    this.cardlist = Object.values(this.cardstore.Cards)
-    /* eslint-disable no-console */
-    console.dir(this.cardlist)
+    this.cardlist = Object.values(this.cardstore.Cards).sort((a, b)=>a.No-b.No)
   },
   data: () => ({
     detail_dialog: false,
@@ -73,6 +71,8 @@ export default {
         this.cardlist = condition.getSearchResult(Object.values(this.cardstore.Cards));
         return;
     }
+  },
+  computed: {
   },
 };
 </script>
