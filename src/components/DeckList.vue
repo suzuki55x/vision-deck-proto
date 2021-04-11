@@ -1,53 +1,27 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex
-        mb-5
-        xs12
-      >
-        <v-card>
-          <v-card-title>{{title}}</v-card-title>
-          <v-data-table :headers="headers" :items="decklist" :items-per-page="50" item-key="No" dense v-model="selectedRows" multi-sort>
-            <template v-slot:top>
-              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
-            </template>
-            <template v-slot:item="{ item }">
-              <tr>
-                <td>
-                  <v-icon small @click="showCardDetail(item)" >mdi-information</v-icon>
-                  <v-icon small @click="putCard(item)" >mdi-plus</v-icon>
-                  <v-icon small @click="removeCard(item)" >mdi-minus</v-icon>
-                </td>
-                <td>{{item.SheetNum}}</td>
-                <td>{{item.No}}</td>
-                <td>{{item.Name}}</td>
-                <td>{{item.Node}}</td>
-                <td>{{item.Cost}}</td>
-                <td>
-                  <template v-if="item.Skill">
-                    <span v-for="skill in item.Skill.split(' ')" :key="skill">
-                      <v-chip class="mr-2" color="primary" pill outlined x-small>{{skill}}</v-chip>
-                    </span>
-                  </template>
-                </td>
-              </tr>
-              </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-card>
+    <v-card-title>{{title}}</v-card-title>
+    <v-card-subtitle>枚数: {{cards_count}} (Ch: {{character_count}}, Sp: {{spell_count}}, Co: {{command_count}})</v-card-subtitle>
+    <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
+    <card-list-virtual-scroll :cardlist="decklist" is_decklist>
+      <template v-slot:action="{ card }">
+        <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon small @click="putCard(card)" >mdi-plus</v-icon>
+        <v-icon small @click="removeCard(card)" >mdi-minus</v-icon>
+      </template>
+    </card-list-virtual-scroll>
+    <v-sparkline height="30" smooth=3 :gradient="['#f72047', '#ffd200']" fill :labels="mana_curve_labels" :value="mana_curve_value"></v-sparkline>
+  </v-card>
 </template>
 
 <script>
 import CardDetailDialog from '@/components/CardDetailDialog';
+import CardListVirtualScroll from '@/components/CardListVirtualScroll';
 
 export default {
   components: {
-    CardDetailDialog
+    CardDetailDialog,
+    CardListVirtualScroll
   },
   props: [
     'title',
@@ -61,52 +35,45 @@ export default {
     decklist: [],
     selectedCard: {},
     selectedRows: [],
-    headers: [
-      {
-        text: 'Actions',
-        align: 'center',
-        sortable: false,
-        width: 80,
-        value: 'Actions'
-      },
-      {
-        text: '枚',
-        align: 'left',
-        sortable: true,
-        value: 'sheetnum'
-      },
-      {
-        text: 'No',
-        align: 'left',
-        sortable: true,
-        value: 'No'
-      },
-      {
-        text: 'カード名',
-        align: 'left',
-        sortable: true,
-        value: 'Name'
-      },
-      {
-        text: 'Node',
-        align: 'left',
-        sortable: true,
-        value: 'Node'
-      },
-      {
-        text: 'Cost',
-        align: 'left',
-        sortable: true,
-        value: 'Cost'
-      },
-      {
-        text: 'Skill',
-        align: 'left',
-        sortable: true,
-        value: 'Skill'
-      },
-    ]
   }),
+  computed:{
+    cards_count() {
+      return this.decklist.reduce((cnt, card)=>cnt+card.SheetNum, 0)
+    },
+    character_count() {
+      return this.decklist.reduce((cnt, card)=>cnt+(card.Type==='Character'?card.SheetNum:0), 0)
+    },
+    spell_count() {
+      return this.decklist.reduce((cnt, card)=>cnt+(card.Type==='Spell'?card.SheetNum:0), 0)
+    },
+    command_count() {
+      return this.decklist.reduce((cnt, card)=>cnt+(card.Type==='Command'?card.SheetNum:0), 0)
+    },
+    mana_curve_array() {
+      //const mana_curve_orig = {}
+      const mana_curve_orig = [
+        '0','1','2','3','4','5','6','7','8','9','10','11',
+        '12','13','14','15','16','17','18','19','20','-'
+      ].reduce((obj, node)=>{
+        obj[node]=0
+        return obj
+      }, {})
+      return this.decklist.reduce((mana_curve, card)=>{
+        if(card.Node in mana_curve) {
+          mana_curve[card.Node]+=card.SheetNum
+        }else{
+          mana_curve[card.Node] = card.SheetNum
+        }
+        return mana_curve
+      }, mana_curve_orig)
+    },
+    mana_curve_labels() {
+      return Object.keys(this.mana_curve_array)
+    },
+    mana_curve_value() {
+      return Object.values(this.mana_curve_array)
+    }
+  },
   methods: {
     rowClicked(row) {
       this.swapSelectionStatus(row.No);

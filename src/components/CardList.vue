@@ -1,107 +1,38 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex
-        mb-5
-        xs12
-      >
-        <v-card>
-          <v-card-title>{{title}}</v-card-title>
-          <v-data-table :headers="headers" :items="cardlist" :items-per-page="50" item-key="No" v-model="selectedRows" multi-sort sort-by="No">
-            <template v-slot:top>
-              <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
-            </template>
-
-            <template v-slot:item="{ item }">
-              <tr>
-                <td>
-                  <v-icon small @click.stop="showCardDetail(item)" >mdi-information</v-icon>
-                  <v-icon small @click="addDeck(item)" >mdi-plus</v-icon>
-                  <v-icon small @click="addSideDeck(item)" >mdi-plus-box</v-icon>
-                </td>
-                <td>{{item.No}}</td>
-                <td>{{item.Name}}</td>
-                <td>{{item.Node}}</td>
-                <td>{{item.Cost}}</td>
-                <td>
-                  <template v-if="item.Skill">
-                    <span v-for="skill in item.Skill.split(' ')" :key="skill">
-                      <v-chip class="mr-2" color="primary" pill outlined x-small>{{skill}}</v-chip>
-                    </span>
-                  </template>
-                </td>
-              </tr>
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-card>
+    <v-card-title>{{title}}</v-card-title>
+    <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard"/>
+    <card-list-virtual-scroll :cardlist="cardlist">
+      <template v-slot:action="{ card }">
+        <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon small @click="addDeck(card)" >mdi-plus</v-icon>
+        <v-icon small @click="addSideDeck(card)" >mdi-plus-box</v-icon>
+      </template>
+    </card-list-virtual-scroll>
+  </v-card>
 </template>
 
 <script>
 import CardDetailDialog from '@/components/CardDetailDialog';
+import CardListVirtualScroll from '@/components/CardListVirtualScroll';
 
 export default {
   components: {
-    CardDetailDialog
+    CardDetailDialog,
+    CardListVirtualScroll
   },
   props: [
     'title',
     'cardstore'
   ],
   created: function() {
-    this.cardlist = Object.values(this.cardstore.Cards)
-    /* eslint-disable no-console */
-    console.dir(this.cardlist)
+    this.cardlist = Object.values(this.cardstore.Cards).sort((a, b)=>a.No-b.No)
   },
   data: () => ({
     detail_dialog: false,
     cardlist: [],
     selectedCard: {},
     selectedRows: [],
-    headers: [
-      {
-        text: 'Actions',
-        align: 'center',
-        sortable: false,
-        width: 80,
-        value: 'Actions'
-      },
-      {
-        text: 'No',
-        align: 'left',
-        sortable: true,
-        value: 'No'
-      },
-      {
-        text: 'カード名',
-        align: 'left',
-        sortable: true,
-        value: 'Name'
-      },
-      {
-        text: 'Node',
-        align: 'left',
-        sortable: true,
-        value: 'Node'
-      },
-      {
-        text: 'Cost',
-        align: 'left',
-        sortable: true,
-        value: 'Cost'
-      },
-      {
-        text: 'Skill',
-        align: 'left',
-        sortable: true,
-        value: 'Skill'
-      },
-    ]
   }),
   methods: {
     rowClicked(row) {
@@ -140,6 +71,8 @@ export default {
         this.cardlist = condition.getSearchResult(Object.values(this.cardstore.Cards));
         return;
     }
+  },
+  computed: {
   },
 };
 </script>
