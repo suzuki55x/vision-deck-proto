@@ -1,6 +1,7 @@
 <template>
   <v-card>
     <v-card-title>{{title}}</v-card-title>
+    <v-card-subtitle>枚数: {{cards_count}}</v-card-subtitle>
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
     <card-list-virtual-scroll :cardlist="decklist" is_decklist>
       <template v-slot:action="{ card }">
@@ -34,6 +35,11 @@ export default {
     selectedCard: {},
     selectedRows: [],
   }),
+  computed:{
+    cards_count() {
+      return this.decklist.reduce((cnt, card)=>cnt+card.SheetNum, 0)
+    },
+  },
   methods: {
     rowClicked(row) {
       this.swapSelectionStatus(row.No);
