@@ -1,5 +1,5 @@
 <template>
-  <v-virtual-scroll bench="1" :items="cardlist" height="240" item-height="40">
+  <v-virtual-scroll bench="1" :items="cardlist" height="220" item-height="42">
     <template v-slot:default="{ item }">
       <v-list-item dense>
         <v-row>

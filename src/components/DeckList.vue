@@ -61,10 +61,8 @@ export default {
       return this.decklist.reduce((mana_curve, card)=>{
         if(card.Node in mana_curve) {
           mana_curve[card.Node]+=card.SheetNum
-          this.log(mana_curve)
         }else{
           mana_curve[card.Node] = card.SheetNum
-          this.log(mana_curve)
         }
         return mana_curve
       }, mana_curve_orig)
