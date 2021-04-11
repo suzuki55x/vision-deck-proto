@@ -10,6 +10,7 @@
         <v-icon small @click="removeCard(card)" >mdi-minus</v-icon>
       </template>
     </card-list-virtual-scroll>
+    <v-sparkline height="30" smooth=3 :gradient="['#f72047', '#ffd200']" fill :labels="mana_curve_labels" :value="mana_curve_value"></v-sparkline>
   </v-card>
 </template>
 
@@ -48,6 +49,32 @@ export default {
     command_count() {
       return this.decklist.reduce((cnt, card)=>cnt+(card.Type==='Command'?card.SheetNum:0), 0)
     },
+    mana_curve_array() {
+      //const mana_curve_orig = {}
+      const mana_curve_orig = [
+        '0','1','2','3','4','5','6','7','8','9','10','11',
+        '12','13','14','15','16','17','18','19','20','-'
+      ].reduce((obj, node)=>{
+        obj[node]=0
+        return obj
+      }, {})
+      return this.decklist.reduce((mana_curve, card)=>{
+        if(card.Node in mana_curve) {
+          mana_curve[card.Node]+=card.SheetNum
+          this.log(mana_curve)
+        }else{
+          mana_curve[card.Node] = card.SheetNum
+          this.log(mana_curve)
+        }
+        return mana_curve
+      }, mana_curve_orig)
+    },
+    mana_curve_labels() {
+      return Object.keys(this.mana_curve_array)
+    },
+    mana_curve_value() {
+      return Object.values(this.mana_curve_array)
+    }
   },
   methods: {
     rowClicked(row) {
