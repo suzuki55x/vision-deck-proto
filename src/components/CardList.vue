@@ -4,8 +4,8 @@
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard"/>
     <card-list-virtual-scroll :cardlist="cardlist">
       <template v-slot:action="{ card }">
-        <v-icon @click="showCardDetail(card)" >mdi-information</v-icon>
-        <v-icon @click="addDeck(card)" >mdi-plus-box</v-icon>
+        <v-icon color="info" @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon color="primary" @click="addDeck(card)" >mdi-plus-box</v-icon>
       </template>
     </card-list-virtual-scroll>
   </v-card>
