@@ -34,24 +34,16 @@
     </div>
     <v-content id="main-content">
       <v-row>
-        <v-col cols="6" v-show="!is_side">
-          <DeckList title="デッキ" :cardstore="cardlist" ref="decklist" />
-        </v-col>
-        <v-col cols="6" v-show="is_side">
-          <DeckList
-            title="サイドデッキ"
-            :cardstore="cardlist"
-            ref="sidedecklist"
-          />
+        <v-col cols="6" >
+          <v-fab-transition hide-on-leave>
+            <DeckList v-show="!is_side" title="デッキ" :cardstore="cardlist" ref="decklist" />
+          </v-fab-transition>
+          <v-fab-transition hide-on-leave>
+            <DeckList v-show="is_side" title="サイドデッキ" :cardstore="cardlist" ref="sidedecklist" />
+          </v-fab-transition>
         </v-col>
         <v-col cols="6">
-          <CardList
-            title="カードリスト"
-            :cardstore="cardlist"
-            ref="cardlist"
-            @addDeckList="addDeckList"
-            @addSideDeckList="addSideDeckList"
-          />
+          <CardList title="カードリスト" :cardstore="cardlist" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
           <v-card class="mt-2" min-height="80px" max-height="80px">なんか</v-card>
         </v-col>
       </v-row>
