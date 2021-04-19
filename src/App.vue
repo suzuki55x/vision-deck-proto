@@ -8,6 +8,7 @@
           @load-deck="loadDeck"
           @write-deck="writeDeck"
         />
+        <v-btn icon color="primary" @click="is_side = !is_side"><v-icon>mdi-rotate-3d-variant</v-icon></v-btn>
         <v-dialog
           v-model="dialog"
           fullscreen
@@ -33,10 +34,10 @@
     </div>
     <v-content id="main-content">
       <v-row>
-        <v-col cols="6">
+        <v-col cols="6" v-show="!is_side">
           <DeckList title="デッキ" :cardstore="cardlist" ref="decklist" />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" v-show="is_side">
           <DeckList
             title="サイドデッキ"
             :cardstore="cardlist"
@@ -89,6 +90,7 @@ export default {
     deck: null,
     writeDeckArray: [],
     writeSideDeckArray: [],
+    is_side: false,
   }),
   methods: {
     addDeckList(card) {
