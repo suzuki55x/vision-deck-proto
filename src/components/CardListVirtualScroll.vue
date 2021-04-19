@@ -13,7 +13,9 @@
             No.{{ item.No }}
           </v-col>
           <v-col cols="6">
+            <div class="text-truncate">
             {{ item.Name }}
+            </div>
           </v-col>
 
           <v-col cols="2" class="text-caption">
@@ -21,7 +23,7 @@
           </v-col>
         </v-row>
       </v-list-item>
-      <v-divider inset></v-divider>
+      <v-divider></v-divider>
     </template>
   </v-virtual-scroll>
 </template>
