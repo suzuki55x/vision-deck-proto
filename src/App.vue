@@ -87,7 +87,8 @@ export default {
   }),
   methods: {
     addDeckList(card) {
-      this.$refs.decklist.putCard(card);
+      // 表示がサイド側の場合、サイドデッキに追加する
+      this.is_side ? this.addSideDeckList(card) : this.$refs.decklist.putCard(card);
     },
     addSideDeckList(card) {
       this.$refs.sidedecklist.putCard(card);
