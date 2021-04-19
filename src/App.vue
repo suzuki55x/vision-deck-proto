@@ -44,9 +44,7 @@
             ref="sidedecklist"
           />
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
+        <v-col cols="6">
           <CardList
             title="カードリスト"
             :cardstore="cardlist"
@@ -54,7 +52,10 @@
             @addDeckList="addDeckList"
             @addSideDeckList="addSideDeckList"
           />
+          <v-card class="mt-2" min-height="80px" max-height="80px">なんか</v-card>
         </v-col>
+      </v-row>
+      <v-row>
       </v-row>
     </v-content>
   </v-app>
