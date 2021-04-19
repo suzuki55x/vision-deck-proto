@@ -44,7 +44,7 @@
         </v-col>
         <v-col cols="6">
           <CardList title="カードリスト" :cardstore="cardlist" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
-          <v-card class="mt-2" min-height="80px" max-height="80px">なんか</v-card>
+          <v-card class="mt-2" min-height="92px" max-height="92px">空きスペース(何か考える)</v-card>
         </v-col>
       </v-row>
       <v-row>

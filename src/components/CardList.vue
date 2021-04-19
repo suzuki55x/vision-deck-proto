@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card min-height="600px" max-height="600px">
     <v-card-title>{{title}}</v-card-title>
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard"/>
     <card-list-virtual-scroll :cardlist="cardlist">

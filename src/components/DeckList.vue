@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card min-height="700px" max-height="700px">
     <v-card-title>{{title}}</v-card-title>
     <v-card-subtitle>枚数: {{cards_count}} (Ch: {{character_count}}, Sp: {{spell_count}}, Co: {{command_count}})</v-card-subtitle>
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
