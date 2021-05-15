@@ -1,5 +1,5 @@
 <template>
-  <v-virtual-scroll bench="1" :items="cardlist" height="220" item-height="42">
+  <v-virtual-scroll bench="1" :items="cardlist" height="520" item-height="42">
     <template v-slot:default="{ item }">
       <v-list-item dense>
         <v-row>
@@ -13,7 +13,9 @@
             No.{{ item.No }}
           </v-col>
           <v-col cols="6">
+            <div class="text-truncate">
             {{ item.Name }}
+            </div>
           </v-col>
 
           <v-col cols="2" class="text-caption">
@@ -21,7 +23,7 @@
           </v-col>
         </v-row>
       </v-list-item>
-      <v-divider inset></v-divider>
+      <v-divider></v-divider>
     </template>
   </v-virtual-scroll>
 </template>

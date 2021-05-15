@@ -1,12 +1,11 @@
 <template>
-  <v-card>
+  <v-card min-height="600px" max-height="600px">
     <v-card-title>{{title}}</v-card-title>
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard"/>
     <card-list-virtual-scroll :cardlist="cardlist">
       <template v-slot:action="{ card }">
-        <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
-        <v-icon small @click="addDeck(card)" >mdi-plus</v-icon>
-        <v-icon small @click="addSideDeck(card)" >mdi-plus-box</v-icon>
+        <v-icon color="info" @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon color="primary" @click="addDeck(card)" >mdi-plus-box</v-icon>
       </template>
     </card-list-virtual-scroll>
   </v-card>
@@ -41,9 +40,9 @@ export default {
     addDeck(card) {
       this.$emit("addDeckList", card)
     },
-    addSideDeck(card) {
-      this.$emit("addSideDeckList", card)
-    },
+    //addSideDeck(card) {
+    //  this.$emit("addSideDeckList", card)
+    //},
     showCardDetail(card) {
       this.selectedCard = card;
       this.detail_dialog = true;

@@ -1,13 +1,13 @@
 <template>
-  <v-card>
+  <v-card min-height="700px" max-height="700px">
     <v-card-title>{{title}}</v-card-title>
     <v-card-subtitle>枚数: {{cards_count}} (Ch: {{character_count}}, Sp: {{spell_count}}, Co: {{command_count}})</v-card-subtitle>
     <card-detail-dialog @closeDialog="closeCardDetail" :is_showable="detail_dialog" :card="selectedCard" />
     <card-list-virtual-scroll :cardlist="decklist" is_decklist>
       <template v-slot:action="{ card }">
-        <v-icon small @click="showCardDetail(card)" >mdi-information</v-icon>
-        <v-icon small @click="putCard(card)" >mdi-plus</v-icon>
-        <v-icon small @click="removeCard(card)" >mdi-minus</v-icon>
+        <v-icon color="info" @click="showCardDetail(card)" >mdi-information</v-icon>
+        <v-icon color="primary" @click="putCard(card)" >mdi-plus-box</v-icon>
+        <v-icon color="error" @click="removeCard(card)" >mdi-minus-box</v-icon>
       </template>
     </card-list-virtual-scroll>
     <v-sparkline height="30" smooth=3 :gradient="['#f72047', '#ffd200']" fill :labels="mana_curve_labels" :value="mana_curve_value"></v-sparkline>

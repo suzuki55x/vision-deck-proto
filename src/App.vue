@@ -8,6 +8,7 @@
           @load-deck="loadDeck"
           @write-deck="writeDeck"
         />
+        <v-btn icon color="primary" @click="is_side = !is_side"><v-icon>mdi-rotate-3d-variant</v-icon></v-btn>
         <v-dialog
           v-model="dialog"
           fullscreen
@@ -33,27 +34,20 @@
     </div>
     <v-content id="main-content">
       <v-row>
-        <v-col cols="6">
-          <DeckList title="デッキ" :cardstore="cardlist" ref="decklist" />
+        <v-col cols="6" >
+          <v-fab-transition hide-on-leave>
+            <DeckList v-show="!is_side" title="デッキ" :cardstore="cardlist" ref="decklist" />
+          </v-fab-transition>
+          <v-fab-transition hide-on-leave>
+            <DeckList v-show="is_side" title="サイドデッキ" :cardstore="cardlist" ref="sidedecklist" />
+          </v-fab-transition>
         </v-col>
         <v-col cols="6">
-          <DeckList
-            title="サイドデッキ"
-            :cardstore="cardlist"
-            ref="sidedecklist"
-          />
+          <CardList title="カードリスト" :cardstore="cardlist" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
+          <v-card class="mt-2" min-height="92px" max-height="92px">空きスペース(何か考える)</v-card>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12">
-          <CardList
-            title="カードリスト"
-            :cardstore="cardlist"
-            ref="cardlist"
-            @addDeckList="addDeckList"
-            @addSideDeckList="addSideDeckList"
-          />
-        </v-col>
       </v-row>
     </v-content>
   </v-app>
@@ -89,10 +83,12 @@ export default {
     deck: null,
     writeDeckArray: [],
     writeSideDeckArray: [],
+    is_side: false,
   }),
   methods: {
     addDeckList(card) {
-      this.$refs.decklist.putCard(card);
+      // 表示がサイド側の場合、サイドデッキに追加する
+      this.is_side ? this.addSideDeckList(card) : this.$refs.decklist.putCard(card);
     },
     addSideDeckList(card) {
       this.$refs.sidedecklist.putCard(card);
