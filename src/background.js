@@ -1,10 +1,16 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, dialog } from 'electron'
+import { ipcMain } from 'electron'
+
 import {
   createProtocol,
-  installVueDevtools
+  //installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import * as fs from 'fs'
+import * as encoding from 'encoding-japanese'
+import * as path from 'path'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -17,9 +23,10 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 1280, height: 800, minWidth: 1280, minHeight: 800, webPreferences: {
-    nodeIntegration: true,
-    enableRemoteModule: true,
-    contextIsolation: false
+    nodeIntegration: false,// default false
+    //enableRemoteModule: true,
+    contextIsolation: true,// default true
+    preload: path.join(__dirname, '../preload.js')
   } })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -89,3 +96,41 @@ if (isDevelopment) {
     })
   }
 }
+
+
+ipcMain.handle('open', async () => {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    filters: [
+      { name: 'Documents', extensions: ['txt'] }
+    ]
+  })
+  if (canceled) return { canceled, data: [] }
+
+  const data = filePaths.map((filePath) => {
+    //return fs.readFileSync(filePath, { encoding: 'utf8' })
+    const buf = fs.readFileSync(filePath)
+    return encoding.convert(buf, {
+      from: 'SJIS',
+      to: 'UNICODE',
+      type: 'string'
+    })
+  })
+  return { canceled, data }
+})
+
+ipcMain.handle('save', async (event, data) => {
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    filters: [
+      { name: 'Documents', extensions: ['txt'] }
+    ]
+  })
+  if (canceled) return
+
+  const sjisData = encoding.convert(data, {
+      to: 'SJIS',
+      from: 'UNICODE',
+      type: 'arraybuffer'
+    })
+
+  fs.writeFileSync(filePath, Buffer.from(sjisData))
+})

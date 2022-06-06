@@ -3,12 +3,10 @@
     <div>
       <v-app-bar app dense>
         <v-spacer></v-spacer>
-        <Deckio
-          ref="deckio"
-          @load-deck="loadDeck"
-          @write-deck="writeDeck"
-        />
-        <v-btn icon color="primary" @click="is_side = !is_side"><v-icon>mdi-rotate-3d-variant</v-icon></v-btn>
+        <Deckio ref="deckio" @load-deck="loadDeck" @write-deck="writeDeck" />
+        <v-btn icon color="primary" @click="is_side = !is_side"
+          ><v-icon>mdi-rotate-3d-variant</v-icon></v-btn
+        >
         <v-dialog
           v-model="dialog"
           fullscreen
@@ -16,15 +14,27 @@
           transition="dialog-bottom-transition"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon color="primary" v-bind="attrs" v-on="on" ><v-icon>mdi-magnify</v-icon></v-btn>
+            <v-btn icon color="primary" v-bind="attrs" v-on="on"
+              ><v-icon>mdi-magnify</v-icon></v-btn
+            >
           </template>
           <v-card>
             <v-toolbar dark>
-              <v-btn icon dark @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
+              <v-btn icon dark @click="dialog = false"
+                ><v-icon>mdi-close</v-icon></v-btn
+              >
               <v-toolbar-title>カード検索</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn dark text @click="search(); dialog = false">検索</v-btn>
+                <v-btn
+                  dark
+                  text
+                  @click="
+                    search();
+                    dialog = false;
+                  "
+                  >検索</v-btn
+                >
               </v-toolbar-items>
             </v-toolbar>
             <SearchArea ref="searcharea" />
@@ -34,21 +44,38 @@
     </div>
     <v-content id="main-content">
       <v-row>
-        <v-col cols="6" >
+        <v-col cols="6">
           <v-fab-transition hide-on-leave>
-            <DeckList v-show="!is_side" title="デッキ" :cardstore="cardlist" ref="decklist" />
+            <DeckList
+              v-show="!is_side"
+              title="デッキ"
+              :cardstore="cardlist"
+              ref="decklist"
+            />
           </v-fab-transition>
           <v-fab-transition hide-on-leave>
-            <DeckList v-show="is_side" title="サイドデッキ" :cardstore="cardlist" ref="sidedecklist" />
+            <DeckList
+              v-show="is_side"
+              title="サイドデッキ"
+              :cardstore="cardlist"
+              ref="sidedecklist"
+            />
           </v-fab-transition>
         </v-col>
         <v-col cols="6">
-          <CardList title="カードリスト" :cardstore="cardlist" ref="cardlist" @addDeckList="addDeckList" @addSideDeckList="addSideDeckList" />
-          <v-card class="mt-2" min-height="92px" max-height="92px">空きスペース(何か考える)</v-card>
+          <CardList
+            title="カードリスト"
+            :cardstore="cardlist"
+            ref="cardlist"
+            @addDeckList="addDeckList"
+            @addSideDeckList="addSideDeckList"
+          />
+          <v-card class="mt-2" min-height="92px" max-height="92px"
+            >空きスペース(何か考える)</v-card
+          >
         </v-col>
       </v-row>
-      <v-row>
-      </v-row>
+      <v-row> </v-row>
     </v-content>
   </v-app>
 </template>
@@ -73,8 +100,7 @@ export default {
     //SidedeckList,
     Deckio,
   },
-  created: function () {
-  },
+  created: function () {},
   mounted: function () {
     this.deck = this.configlist.Card.Deck;
   },
@@ -88,7 +114,9 @@ export default {
   methods: {
     addDeckList(card) {
       // 表示がサイド側の場合、サイドデッキに追加する
-      this.is_side ? this.addSideDeckList(card) : this.$refs.decklist.putCard(card);
+      this.is_side
+        ? this.addSideDeckList(card)
+        : this.$refs.decklist.putCard(card);
     },
     addSideDeckList(card) {
       this.$refs.sidedecklist.putCard(card);
@@ -97,9 +125,11 @@ export default {
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
     },
     loadDeck(deckArray) {
+      // eslint-disable-next-line no-console
+      //console.dir(deckArray);
       let sepalate = deckArray.indexOf("--");
       this.$refs.decklist.loadDeck(deckArray.slice(0, sepalate));
-      if (sepalate + 2 < deckArray.length) {
+      if (sepalate + 1 < deckArray.length) {
         this.$refs.sidedecklist.loadDeck(
           deckArray.slice(sepalate + 1, deckArray.length)
         );
