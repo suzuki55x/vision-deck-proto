@@ -1,5 +1,8 @@
 # vision-deck-proto
 
+Node.js v16.15.1
+yarn v1.22.18
+
 ## Project setup
 
 ```shell
