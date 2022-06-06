@@ -10,42 +10,18 @@
 </template>
 
 <script>
-//const fs = require("fs");
-//const dialog = require("electron").remote.dialog;
-//const BrowserWindow = require("electron").remote.BrowserWindow;
-
 export default {
   data() {
-    return {
-      //deckArray: [],
-    };
+    return {};
   },
   methods: {
-    readDeck: async function (/*event*/) {
-      //let file = event.target.files[0];
-      //let me = this;
-
+    readDeck: async function () {
       const { canceled, data } = await window.electron.open();
       if (canceled) return;
-      // eslint-disable-next-line no-console
-      console.log(data);
+
       const deckArray = data[0].split(/\r\n|\r|\n/);
+
       this.$emit("load-deck", deckArray);
-
-      /*
-      function read(callback) {
-        let reader = new FileReader();
-        reader.onload = function () {
-          this.deckArray = callback(reader.result);
-          me.$emit("load-deck", this.deckArray);
-        };
-        reader.readAsText(file, "shift-jis");
-      }
-
-      read(function (text) {
-        return text.split(/\r\n|\r|\n/);
-      });
-      */
     },
     writeDeck: function () {
       this.$emit("write-deck");
@@ -74,33 +50,6 @@ export default {
 
       const data = deck + "\r\n--\r\n" + side;
       await window.electron.save(data);
-      /*
-
-      const win = BrowserWindow.getFocusedWindow();
-      dialog.showSaveDialog(
-        win,
-        {
-          properties: ["openFile"],
-          filters: [
-            {
-              name: "Documents",
-              extensions: ["txt"],
-            },
-          ],
-        },
-        (fileName) => {
-          if (fileName) {
-            const data = deck + "\r\n--\r\n" + side;
-            fs.writeFile(fileName, data, (error) => {
-              if (error != null) {
-                alert("save error.");
-                return;
-              }
-            });
-          }
-        }
-      );
-      */
     },
   },
 };

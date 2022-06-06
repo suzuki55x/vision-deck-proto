@@ -125,8 +125,6 @@ export default {
       this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
     },
     loadDeck(deckArray) {
-      // eslint-disable-next-line no-console
-      //console.dir(deckArray);
       let sepalate = deckArray.indexOf("--");
       this.$refs.decklist.loadDeck(deckArray.slice(0, sepalate));
       if (sepalate + 1 < deckArray.length) {
