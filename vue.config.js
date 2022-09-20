@@ -2,10 +2,10 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       nodeIntegration: false,
+      preload: "preload.js",
       builderOptions: {
         productName: "vision-deck-proto",
-        appId: "com.vision.deck",
-        preload: "preload.js",
+        appId: "com.visionx.deck",
         win: {
           icon: 'src/assets/app.ico',
           target: [
