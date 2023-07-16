@@ -4,37 +4,21 @@
       <v-app-bar app dense>
         <v-spacer></v-spacer>
         <Deckio ref="deckio" @load-deck="loadDeck" @write-deck="writeDeck" />
-        <v-btn icon color="primary" @click="is_side = !is_side"
-          ><v-icon>mdi-rotate-3d-variant</v-icon></v-btn
-        >
-        <v-dialog
-          v-model="dialog"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-        >
+        <v-btn icon color="primary" @click="is_side = !is_side"><v-icon>mdi-rotate-3d-variant</v-icon></v-btn>
+        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon color="primary" v-bind="attrs" v-on="on"
-              ><v-icon>mdi-magnify</v-icon></v-btn
-            >
+            <v-btn icon color="primary" v-bind="attrs" v-on="on"><v-icon>mdi-magnify</v-icon></v-btn>
           </template>
           <v-card>
             <v-toolbar dark>
-              <v-btn icon dark @click="dialog = false"
-                ><v-icon>mdi-close</v-icon></v-btn
-              >
+              <v-btn icon dark @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
               <v-toolbar-title>カード検索</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn
-                  dark
-                  text
-                  @click="
-                    search();
-                    dialog = false;
-                  "
-                  >検索</v-btn
-                >
+                <v-btn dark text @click="
+                  search();
+                dialog = false;
+                ">検索</v-btn>
               </v-toolbar-items>
             </v-toolbar>
             <SearchArea ref="searcharea" />
@@ -46,33 +30,19 @@
       <v-row>
         <v-col cols="6">
           <v-fab-transition hide-on-leave>
-            <DeckList
-              v-show="!is_side"
-              title="デッキ"
-              :cardstore="cardlist"
-              ref="decklist"
-            />
+            <DeckList v-show="!is_side" title="デッキ" :cardstore="cardlist" ref="decklist" />
           </v-fab-transition>
           <v-fab-transition hide-on-leave>
-            <DeckList
-              v-show="is_side"
-              title="サイドデッキ"
-              :cardstore="cardlist"
-              ref="sidedecklist"
-            />
+            <DeckList v-show="is_side" title="サイドデッキ" :cardstore="cardlist" ref="sidedecklist" />
           </v-fab-transition>
         </v-col>
         <v-col cols="6">
-          <CardList
-            title="カードリスト"
-            :cardstore="cardlist"
-            ref="cardlist"
-            @addDeckList="addDeckList"
-            @addSideDeckList="addSideDeckList"
-          />
-          <v-card class="mt-2" min-height="92px" max-height="92px"
-            >空きスペース(何か考える)</v-card
-          >
+          <CardList title="カードリスト" :cardstore="cardlist" ref="cardlist" @addDeckList="addDeckList"
+            @addSideDeckList="addSideDeckList" />
+          <v-card class="mt-2" min-height="92px" max-height="92px">
+            <v-text-field label="文字列検索" v-model="cardTxt" @input="instantSearch" outlined dense clearable
+              hide-details></v-text-field>
+          </v-card>
         </v-col>
       </v-row>
       <v-row> </v-row>
@@ -100,7 +70,7 @@ export default {
     //SidedeckList,
     Deckio,
   },
-  created: function () {},
+  created: function () { },
   mounted: function () {
     this.deck = this.configlist.Card.Deck;
   },
@@ -110,8 +80,16 @@ export default {
     writeDeckArray: [],
     writeSideDeckArray: [],
     is_side: false,
+
+    // 検索用
+    instantCondition: new SearchCondition(),
+    cardTxt: "",
   }),
   methods: {
+    instantSearch() {
+      this.instantCondition.cardTxt = this.cardTxt;
+      this.$refs.cardlist.search(this.instantCondition);
+    },
     addDeckList(card) {
       // 表示がサイド側の場合、サイドデッキに追加する
       this.is_side
@@ -146,9 +124,11 @@ export default {
 .center-input input {
   text-align: center;
 }
+
 .right-input input {
   text-align: right;
 }
+
 .left-input input {
   text-align: left;
 }
