@@ -87,7 +87,7 @@ export default class SearchCondition { // eslint-disable-line no-unused-vars
         }
 
         //特殊効果の検索
-        if(this.selectedSpecialEffect.length > 0) {
+        if(this.selectedSpecialEffect && this.selectedSpecialEffect.length > 0) {
             cardlist = cardlist.filter(card =>
                 card.Skill !== undefined && 
                 this.selectedSpecialEffect.some(special =>
@@ -97,7 +97,7 @@ export default class SearchCondition { // eslint-disable-line no-unused-vars
         }
 
         //戦術の検索
-        if(this.selectedTactics.length > 0) {
+        if(this.selectedTactics && this.selectedTactics.length > 0) {
             cardlist = cardlist.filter(card =>
                 card.Skill !== undefined && 
                 this.selectedTactics.some(special =>
@@ -108,7 +108,7 @@ export default class SearchCondition { // eslint-disable-line no-unused-vars
 
         //種族の検索
         //ToDo: 種族なしの検索
-        if(this.selectedAttribute.length > 0) {
+        if(this.selectedAttribute && this.selectedAttribute.length > 0) {
             cardlist = cardlist.filter(card =>
                 card.Class !== undefined && 
                 this.selectedAttribute.some(special =>
@@ -117,6 +117,8 @@ export default class SearchCondition { // eslint-disable-line no-unused-vars
                 )
         }
 
+        // ID順にソート
+        cardlist = cardlist.sort((a, b)=>a.No-b.No)
 
         return cardlist;
     }
