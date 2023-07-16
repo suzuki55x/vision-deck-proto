@@ -117,6 +117,7 @@ export default class SearchCondition { // eslint-disable-line no-unused-vars
                 )
         }
 
+        // ID順にソート
         cardlist = cardlist.sort((a, b)=>a.No-b.No)
 
         return cardlist;
