@@ -72,11 +72,12 @@
 </template>
 
 <script>
-import SearchCondition from '../searchCondition';
+//import SearchCondition from '../searchCondition';
+import Const from '../const';
 
 export default {
   data: () => ({
-    condition: null,
+    //condition: null,
     cardTxt: '',
     Node: 0,
     Cost: 0,
@@ -92,17 +93,17 @@ export default {
     selectedAttribute: [],
   }),
   created: function () {
-    this.condition = new SearchCondition();
+    //this.condition = new SearchCondition();
   },
   computed: {
-    specialEffect: function () { return this.condition.DEF_SPECIAL_EFFECT; },
-    tactics: function () { return this.condition.DEF_TACTICS; },
-    type: function () { return this.condition.DEF_TYPE; },
-    attribute: function () { return this.condition.DEF_ATTRIBUTE },
-    nodeOption: function () { return this.condition.DEF_NODE_OPTION; },
-    costOption: function () { return this.condition.DEF_COST_OPTION; },
-    attackOption: function () { return this.condition.DEF_ATTACK_OPTION; },
-    toughnessOption: function () { return this.condition.DEF_TOUGHNESS_OPTION; },
+    specialEffect: function () { return Const.DEF_SPECIAL_EFFECT; },
+    tactics: function () { return Const.DEF_TACTICS; },
+    type: function () { return Const.DEF_TYPE; },
+    attribute: function () { return Const.DEF_ATTRIBUTE },
+    nodeOption: function () { return Const.DEF_NODE_OPTION; },
+    costOption: function () { return Const.DEF_COST_OPTION; },
+    attackOption: function () { return Const.DEF_ATTACK_OPTION; },
+    toughnessOption: function () { return Const.DEF_TOUGHNESS_OPTION; },
   },
   methods: {
     resetNodeForm: function () {
@@ -117,21 +118,25 @@ export default {
     resetToughnessForm: function () {
       this.$refs.toughnessForm.reset();
     },
-    getSearchCondition() {
-      this.condition.cardTxt = this.cardTxt;
-      this.condition.type = this.chosenType;
-      this.condition.node = this.Node;
-      this.condition.cost = this.Cost;
-      this.condition.attack = this.Attack;
-      this.condition.toughness = this.Toughness;
-      this.condition.nodeOption = this.chosenNodeOption;
-      this.condition.costOption = this.chosenCostOption;
-      this.condition.attackOption = this.chosenAttackOption;
-      this.condition.toughnessOption = this.chosenToughnessOption;
-      this.condition.selectedSpecialEffect = this.selectedSpecialEffect;
-      this.condition.selectedTactics = this.selectedTactics;
-      this.condition.selectedAttribute = this.selectedAttribute;
-      return this.condition;
+    updateSearchCondition(condition) {
+
+      // すでにインスタント検索のテキストが入っているが、詳細検索画面に入力があれば、上書き
+      if (this.cardTxt) {
+        condition.cardTxt = this.cardTxt;
+      }
+      condition.type = this.chosenType;
+      condition.node = this.Node;
+      condition.cost = this.Cost;
+      condition.attack = this.Attack;
+      condition.toughness = this.Toughness;
+      condition.nodeOption = this.chosenNodeOption;
+      condition.costOption = this.chosenCostOption;
+      condition.attackOption = this.chosenAttackOption;
+      condition.toughnessOption = this.chosenToughnessOption;
+      condition.selectedSpecialEffect = this.selectedSpecialEffect;
+      condition.selectedTactics = this.selectedTactics;
+      condition.selectedAttribute = this.selectedAttribute;
+      return condition;
     }
   }
 };
