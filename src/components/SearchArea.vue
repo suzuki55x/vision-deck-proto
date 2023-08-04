@@ -15,8 +15,10 @@
               <v-container>
                 <v-form ref="nodeForm">
                   <v-row>
-                    <v-col> <v-text-field type="number" class="right-input" min="0" label="Node" v-model="Node" clearable
-                        dense /> </v-col>
+                    <v-col>
+                      <v-text-field type="number" class="right-input" min="0" label="Node" v-model="Node"
+                        @focus="$event.target.select()" clearable dense />
+                    </v-col>
                     <v-col> <v-select :items="nodeOption" v-model="chosenNodeOption" dense></v-select> </v-col>
                     <v-col> <v-btn color="" @click="resetNodeForm" dense>reset</v-btn> </v-col>
                   </v-row>
@@ -24,8 +26,8 @@
 
                 <v-form ref="costForm">
                   <v-row>
-                    <v-col> <v-text-field type="number" class="right-input" min="0" label="Cost" v-model="Cost" clearable
-                        dense /> </v-col>
+                    <v-col> <v-text-field type="number" class="right-input" min="0" label="Cost" v-model="Cost"
+                        @focus="$event.target.select()" clearable dense /> </v-col>
                     <v-col> <v-select :items="costOption" v-model="chosenCostOption" dense></v-select> </v-col>
                     <v-col> <v-btn color="" @click="resetCostForm" dense>reset</v-btn> </v-col>
                   </v-row>
@@ -33,8 +35,8 @@
 
                 <v-form ref="attackForm">
                   <v-row>
-                    <v-col> <v-text-field type="number" class="right-input" min="0" label="攻撃" v-model="Attack" clearable
-                        dense /> </v-col>
+                    <v-col> <v-text-field type="number" class="right-input" min="0" label="攻撃" v-model="Attack"
+                        @focus="$event.target.select()" clearable dense /> </v-col>
                     <v-col> <v-select :items="attackOption" v-model="chosenAttackOption" dense></v-select> </v-col>
                     <v-col> <v-btn color="" @click="resetAttackForm" dense>reset</v-btn> </v-col>
 
@@ -44,7 +46,7 @@
                 <v-form ref="toughnessForm">
                   <v-row>
                     <v-col> <v-text-field type="number" class="right-input" min="0" label="耐久" v-model="Toughness"
-                        clearable dense /> </v-col>
+                        @focus="$event.target.select()" clearable dense /> </v-col>
                     <v-col> <v-select :items="toughnessOption" v-model="chosenToughnessOption" dense></v-select> </v-col>
                     <v-col> <v-btn color="" @click="resetToughnessForm" dense>reset</v-btn> </v-col>
                   </v-row>
