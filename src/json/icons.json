@@ -24,7 +24,8 @@
     "対象": "guruguru.gif",
     "星": "hoshi.gif",
     "複数": "multi.gif",
-    "無し": "none.gif"
+    "無し": "none.gif",
+    "-": "none.gif"
   },
   "time": {
     "呪符": "curse.gif",

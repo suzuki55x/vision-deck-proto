@@ -82,13 +82,17 @@ export default {
     is_side: false,
 
     // 検索用
-    instantCondition: new SearchCondition(),
+    searchCondition: new SearchCondition(),
     cardTxt: "",
   }),
   methods: {
     instantSearch() {
-      this.instantCondition.cardTxt = this.cardTxt;
-      this.$refs.cardlist.search(this.instantCondition);
+      if (this.$refs.searcharea) {
+        this.$refs.searcharea.updateSearchCondition(this.searchCondition)
+      }
+      this.searchCondition.cardTxt = this.cardTxt;
+
+      this.$refs.cardlist.search(this.searchCondition);
     },
     addDeckList(card) {
       // 表示がサイド側の場合、サイドデッキに追加する
@@ -100,7 +104,9 @@ export default {
       this.$refs.sidedecklist.putCard(card);
     },
     search() {
-      this.$refs.cardlist.search(this.$refs.searcharea.getSearchCondition());
+      this.$refs.cardlist.search(this.$refs.searcharea.updateSearchCondition(this.searchCondition));
+      // 詳細検索で上書きしていた場合、それに合わせる
+      this.cardTxt = this.searchCondition.cardTxt;
     },
     loadDeck(deckArray) {
       let sepalate = deckArray.indexOf("--");
