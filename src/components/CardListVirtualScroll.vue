@@ -42,9 +42,17 @@ export default {
       if (item.Type == 'Character') {
         return 'yellow lighten-5';
       } else if (item.Type == 'Spell') {
-        return 'pink lighten-5';
+        if (item.Skill && item.Skill.includes('ラストスペル')) {
+          return 'grey lighten-1';
+        } else if (item.Skill && item.Skill.includes('ラストワード')) {
+          return 'red lighten-3';
+        } else if (item.Skill && item.Skill.includes('オーバードライブ')) {
+          return 'purple lighten-5';
+        } else {
+          return 'pink lighten-5';
+        }
       } else if (item.Type == 'Command') {
-        return 'blue-grey lighten-4';
+        return 'blue-grey lighten-5';
       } else {
         return '';
       }
