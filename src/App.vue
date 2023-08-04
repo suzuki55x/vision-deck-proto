@@ -82,13 +82,17 @@ export default {
     is_side: false,
 
     // 検索用
-    instantCondition: new SearchCondition(),
+    //instantCondition: new SearchCondition(),
     cardTxt: "",
   }),
   methods: {
     instantSearch() {
-      this.instantCondition.cardTxt = this.cardTxt;
-      this.$refs.cardlist.search(this.instantCondition);
+      //this.instantCondition.cardTxt = this.cardTxt;
+      let searchCondition = this.$refs.searcharea.getSearchCondition()
+      searchCondition.cardTxt = this.cardTxt;
+
+      //this.$refs.cardlist.search(this.instantCondition);
+      this.$refs.cardlist.search(searchCondition);
     },
     addDeckList(card) {
       // 表示がサイド側の場合、サイドデッキに追加する
