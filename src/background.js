@@ -26,7 +26,7 @@ function createWindow () {
     nodeIntegration: false,// default false
     //enableRemoteModule: true,
     contextIsolation: true,// default true
-    preload: path.join(__dirname, '../preload.js')
+    preload: path.join(__dirname, './preload.js')
   } })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
