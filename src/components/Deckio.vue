@@ -30,7 +30,6 @@ export default {
         //this.supportVisionOnlineFormat = true;
         // VOF形式を通常フォーマットに変換する。
         deckArray = this.convertDeckArrayToNormalFormat(deckArray);
-        alert(deckArray)
       }
 
       this.$emit("load-deck", deckArray);
