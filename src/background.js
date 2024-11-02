@@ -109,11 +109,21 @@ ipcMain.handle('open', async () => {
   const data = filePaths.map((filePath) => {
     //return fs.readFileSync(filePath, { encoding: 'utf8' })
     const buf = fs.readFileSync(filePath)
-    return encoding.convert(buf, {
-      from: 'SJIS',
-      to: 'UNICODE',
-      type: 'string'
-    })
+
+    // SJISかどうか判定
+    const isSJIS = encoding.detect(buf) === 'SJIS'
+
+    // SJISの場合はUNICODEに変換
+    if (isSJIS) {
+      return encoding.convert(buf, {
+        from: 'SJIS',
+        to: 'UNICODE',
+        type: 'string'
+      })
+    }
+
+    // UTF-8の場合はそのまま返す
+    return buf.toString()
   })
   return { canceled, data }
 })
